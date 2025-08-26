@@ -7,6 +7,7 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { sql } from "drizzle-orm";
 import { pgTable, text, varchar, timestamp, integer, boolean, jsonb } from "drizzle-orm/pg-core";
 import { eq, desc, and } from "drizzle-orm";
+import connectPgSimple from 'connect-pg-simple';
 
 // Database Schema - Exact match with shared/schema.ts
 const users = pgTable("users", {
@@ -184,15 +185,24 @@ const homePageContent = pgTable("home_page_content", {
 
 // Initialize database connection
 let db;
+let dbPool;
 const initializeDatabase = async () => {
   if (!db) {
-    const pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-      max: 20, // Connection pool size
-      idleTimeoutMillis: 30000, // Close idle connections after 30 seconds
-      connectionTimeoutMillis: 2000, // Return an error after 2 seconds if connection could not be established
-    });
+    // Create a single pool instance to be reused
+    if (!dbPool) {
+      dbPool = new Pool({
+        connectionString: process.env.DATABASE_URL,
+        ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+        max: 10, // Reduced pool size for serverless environment
+        idleTimeoutMillis: 30000, // Close idle connections after 30 seconds
+        connectionTimeoutMillis: 2000, // Return an error after 2 seconds if connection could not be established
+      });
+      
+      // Add error handler for the pool
+      dbPool.on('error', (err) => {
+        console.error('Unexpected database pool error:', err);
+      });
+    }
     
     const schema = {
       users,
@@ -207,7 +217,7 @@ const initializeDatabase = async () => {
       homePageContent,
     };
     
-    db = drizzle({ client: pool, schema });
+    db = drizzle({ client: dbPool, schema });
   }
   return db;
 };
@@ -232,17 +242,36 @@ app.use((req, res, next) => {
   }
 });
 
-// Session configuration for serverless
+// Create PostgreSQL session store for serverless environment
+const PgSession = connectPgSimple(session);
+
+// Session configuration for serverless with PostgreSQL store
 app.use(session({
+  store: new PgSession({
+    pool: new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+    }),
+    tableName: 'sessions', // Must match the sessions table in schema.ts
+    createTableIfMissing: true
+  }),
   secret: process.env.SESSION_SECRET || 'dev-secret-key-change-in-production',
   resave: false,
   saveUninitialized: false,
   cookie: {
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }));
+
+// Add error handling for session store
+app.use((req, res, next) => {
+  if (!req.session) {
+    console.error('Session store error');
+  }
+  next();
+});
 
 // Authentication middleware
 const requireAuth = (req, res, next) => {
@@ -345,11 +374,54 @@ app.get("/api/blog-posts/by-id/:id", async (req, res) => {
 app.post("/api/blog-posts", requireAuth, async (req, res) => {
   try {
     await initializeDatabase();
-    const [post] = await db.insert(blogPosts).values(req.body).returning();
-    res.status(201).json(post);
+    
+    // Validate required fields
+    const requiredFields = ['title', 'slug', 'excerpt', 'content', 'featuredImage', 'category', 'readingTime'];
+    const missingFields = requiredFields.filter(field => !req.body[field]);
+    
+    if (missingFields.length > 0) {
+      return res.status(400).json({ 
+        success: false, 
+        message: `Missing required fields: ${missingFields.join(', ')}` 
+      });
+    }
+    
+    // Add timestamps if not provided
+    const postData = {
+      ...req.body,
+      createdAt: req.body.createdAt || new Date(),
+      updatedAt: req.body.updatedAt || new Date(),
+      publishedAt: req.body.publishedAt || new Date()
+    };
+    
+    const [post] = await db.insert(blogPosts).values(postData).returning();
+    
+    if (!post) {
+      throw new Error('Database returned empty result after insert');
+    }
+    
+    console.log(`Blog post created successfully: ${post.id}`);
+    res.status(201).json({
+      success: true,
+      message: "Blog post created successfully",
+      post
+    });
   } catch (error) {
     console.error("Error creating blog post:", error);
-    res.status(500).json({ message: "Failed to create blog post" });
+    
+    // Check for specific error types
+    if (error.message.includes('duplicate key')) {
+      return res.status(409).json({ 
+        success: false, 
+        message: "A post with this slug already exists" 
+      });
+    }
+    
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to create blog post", 
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined 
+    });
   }
 });
 
@@ -396,10 +468,38 @@ app.get("/api/destinations", async (req, res) => {
     }
     
     const result = await query;
-    res.json(result);
+    
+    // Process destinations to ensure coordinates are properly formatted
+    const processedDestinations = result.map(destination => {
+      // Ensure coordinates are properly formatted
+      if (destination.coordinates && typeof destination.coordinates === 'string') {
+        try {
+          destination.coordinates = JSON.parse(destination.coordinates);
+        } catch (e) {
+          console.error(`Error parsing coordinates for destination ${destination.id}:`, e);
+          // Set default coordinates if parsing fails
+          destination.coordinates = { lat: 20.5937, lng: 78.9629 };
+        }
+      }
+      
+      // Ensure latitude and longitude are numbers
+      if (destination.coordinates && typeof destination.coordinates === 'object') {
+        destination.coordinates.lat = parseFloat(destination.coordinates.lat);
+        destination.coordinates.lng = parseFloat(destination.coordinates.lng);
+      }
+      
+      return destination;
+    });
+    
+    console.log(`Retrieved ${processedDestinations.length} destinations successfully`);
+    res.json(processedDestinations);
   } catch (error) {
     console.error("Error fetching destinations:", error);
-    res.status(500).json({ message: "Failed to fetch destinations" });
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to fetch destinations", 
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined 
+    });
   }
 });
 
@@ -422,11 +522,56 @@ app.get("/api/destinations/:slug", async (req, res) => {
 app.post("/api/destinations", requireAuth, async (req, res) => {
   try {
     await initializeDatabase();
-    const [destination] = await db.insert(destinations).values(req.body).returning();
-    res.status(201).json(destination);
+    
+    // Validate required fields
+    const requiredFields = ['name', 'slug', 'description', 'continent', 'country', 'featuredImage'];
+    const missingFields = requiredFields.filter(field => !req.body[field]);
+    
+    if (missingFields.length > 0) {
+      return res.status(400).json({ 
+        success: false, 
+        message: `Missing required fields: ${missingFields.join(', ')}` 
+      });
+    }
+    
+    // Add timestamps if not provided
+    const destinationData = {
+      ...req.body,
+      createdAt: req.body.createdAt || new Date(),
+      updatedAt: req.body.updatedAt || new Date()
+    };
+    
+    const [destination] = await db
+      .insert(destinations)
+      .values(destinationData)
+      .returning();
+    
+    if (!destination) {
+      throw new Error('Database returned empty result after insert');
+    }
+    
+    console.log(`Destination created successfully: ${destination.id}`);
+    res.status(201).json({
+      success: true,
+      message: "Destination created successfully",
+      destination
+    });
   } catch (error) {
     console.error("Error creating destination:", error);
-    res.status(500).json({ message: "Failed to create destination" });
+    
+    // Check for specific error types
+    if (error.message.includes('duplicate key')) {
+      return res.status(409).json({ 
+        success: false, 
+        message: "A destination with this slug already exists" 
+      });
+    }
+    
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to create destination", 
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined 
+    });
   }
 });
 
@@ -539,21 +684,95 @@ app.get("/api/travel-pins", async (req, res) => {
     const pins = await db.select().from(travelPins)
       .where(eq(travelPins.isVisible, true))
       .orderBy(desc(travelPins.createdAt));
-    res.json(pins);
+    
+    // Process pins to ensure coordinates are properly formatted
+    const processedPins = pins.map(pin => {
+      // Ensure coordinates are properly formatted
+      if (pin.coordinates && typeof pin.coordinates === 'string') {
+        try {
+          pin.coordinates = JSON.parse(pin.coordinates);
+        } catch (e) {
+          console.error(`Error parsing coordinates for pin ${pin.id}:`, e);
+          // Set default coordinates if parsing fails
+          pin.coordinates = { lat: 20.5937, lng: 78.9629 };
+        }
+      }
+      
+      // Ensure latitude and longitude are numbers
+      if (pin.coordinates && typeof pin.coordinates === 'object') {
+        pin.coordinates.lat = parseFloat(pin.coordinates.lat);
+        pin.coordinates.lng = parseFloat(pin.coordinates.lng);
+      }
+      
+      return pin;
+    });
+    
+    console.log(`Retrieved ${processedPins.length} travel pins successfully`);
+    res.json(processedPins);
   } catch (error) {
     console.error("Error fetching travel pins:", error);
-    res.status(500).json({ message: "Failed to fetch travel pins" });
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to fetch travel pins", 
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined 
+    });
   }
 });
 
 app.post("/api/travel-pins", requireAuth, async (req, res) => {
   try {
     await initializeDatabase();
-    const [pin] = await db.insert(travelPins).values(req.body).returning();
-    res.status(201).json(pin);
+    
+    // Validate required fields
+    const requiredFields = ['title', 'latitude', 'longitude', 'visitDate'];
+    const missingFields = requiredFields.filter(field => !req.body[field]);
+    
+    if (missingFields.length > 0) {
+      return res.status(400).json({ 
+        success: false, 
+        message: `Missing required fields: ${missingFields.join(', ')}` 
+      });
+    }
+    
+    // Validate latitude and longitude are valid numbers
+    const lat = parseFloat(req.body.latitude);
+    const lng = parseFloat(req.body.longitude);
+    
+    if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid coordinates. Latitude must be between -90 and 90, longitude between -180 and 180"
+      });
+    }
+    
+    // Ensure coordinates are stored as numbers, not strings
+    const pinData = {
+      ...req.body,
+      latitude: lat,
+      longitude: lng,
+      createdAt: req.body.createdAt || new Date(),
+      updatedAt: req.body.updatedAt || new Date()
+    };
+    
+    const [pin] = await db.insert(travelPins).values(pinData).returning();
+    
+    if (!pin) {
+      throw new Error('Database returned empty result after insert');
+    }
+    
+    console.log(`Travel pin created successfully: ${pin.id}`);
+    res.status(201).json({
+      success: true,
+      message: "Travel pin created successfully",
+      pin
+    });
   } catch (error) {
     console.error("Error creating travel pin:", error);
-    res.status(500).json({ message: "Failed to create travel pin" });
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to create travel pin", 
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined 
+    });
   }
 });
 
@@ -592,10 +811,109 @@ app.get("/api/journey", async (req, res) => {
     const [tracking] = await db.select().from(journeyTracking)
       .orderBy(desc(journeyTracking.lastUpdated))
       .limit(1);
-    res.json(tracking || {});
+    
+    if (!tracking) {
+      console.log("No journey tracking data found, returning default data");
+      // Return default data if no journey tracking data exists
+      return res.json({
+        id: "default",
+        currentLocation: "Mysuru, Karnataka",
+        currentCoordinates: { lat: 12.2958, lng: 76.6394 },
+        journeyProgress: 65,
+        daysTraveled: 78,
+        statesCovered: 12,
+        distanceCovered: 3450,
+        lastUpdated: new Date()
+      });
+    }
+    
+    // Ensure coordinates are properly formatted
+    if (tracking.currentCoordinates && typeof tracking.currentCoordinates === 'string') {
+      try {
+        tracking.currentCoordinates = JSON.parse(tracking.currentCoordinates);
+      } catch (e) {
+        console.error("Error parsing coordinates:", e);
+        // Set default coordinates if parsing fails
+        tracking.currentCoordinates = { lat: 12.2958, lng: 76.6394 };
+      }
+    }
+    
+    console.log("Journey data retrieved successfully:", tracking.id);
+    res.json(tracking);
   } catch (error) {
     console.error("Error fetching journey tracking:", error);
-    res.status(500).json({ message: "Failed to fetch journey tracking" });
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to fetch journey tracking", 
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined 
+    });
+  }
+});
+
+app.post("/api/journey-tracking", requireAuth, async (req, res) => {
+  try {
+    await initializeDatabase();
+    
+    // Validate required fields
+    const requiredFields = ['currentLocation', 'currentCoordinates'];
+    const missingFields = requiredFields.filter(field => !req.body[field]);
+    
+    if (missingFields.length > 0) {
+      return res.status(400).json({ 
+        success: false, 
+        message: `Missing required fields: ${missingFields.join(', ')}` 
+      });
+    }
+    
+    // Validate coordinates format
+    if (typeof req.body.currentCoordinates !== 'object' || 
+        !('lat' in req.body.currentCoordinates) || 
+        !('lng' in req.body.currentCoordinates)) {
+      return res.status(400).json({
+        success: false,
+        message: "currentCoordinates must contain lat and lng properties"
+      });
+    }
+    
+    // Validate coordinate values
+    const lat = parseFloat(req.body.currentCoordinates.lat);
+    const lng = parseFloat(req.body.currentCoordinates.lng);
+    
+    if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid coordinates. Latitude must be between -90 and 90, longitude between -180 and 180"
+      });
+    }
+    
+    // Add timestamps if not provided
+    const trackingData = {
+      ...req.body,
+      lastUpdated: new Date()
+    };
+    
+    const [entry] = await db
+      .insert(journeyTracking)
+      .values(trackingData)
+      .returning();
+    
+    if (!entry) {
+      throw new Error('Database returned empty result after insert');
+    }
+    
+    console.log(`Journey tracking entry created successfully: ${entry.id}`);
+    res.status(201).json({
+      success: true,
+      message: "Journey tracking entry created successfully",
+      entry
+    });
+  } catch (error) {
+    console.error("Error creating journey tracking entry:", error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to create journey tracking entry", 
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined 
+    });
   }
 });
 
@@ -735,8 +1053,17 @@ app.get("/api/auth/user", (req, res) => {
 });
 
 app.post("/api/auth/logout", (req, res) => {
-  req.session = null;
-  res.json({ success: true, message: "Logged out successfully" });
+  if (req.session) {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error destroying session:', err);
+        return res.status(500).json({ success: false, message: "Logout failed" });
+      }
+      res.json({ success: true, message: "Logged out successfully" });
+    });
+  } else {
+    res.json({ success: true, message: "Already logged out" });
+  }
 });
 
 // Admin Stats
