@@ -4,184 +4,20 @@ import session from 'express-session';
 import pkg from 'pg';
 const { Pool } = pkg;
 import { drizzle } from 'drizzle-orm/node-postgres';
-import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp, integer, boolean, jsonb } from "drizzle-orm/pg-core";
 import { eq, desc, and } from "drizzle-orm";
 import connectPgSimple from 'connect-pg-simple';
-
-// Database Schema - Exact match with shared/schema.ts
-const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
-});
-
-const blogPosts = pgTable("blog_posts", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  title: text("title").notNull(),
-  slug: text("slug").notNull().unique(),
-  excerpt: text("excerpt").notNull(),
-  content: text("content").notNull(),
-  featuredImage: text("featured_image").notNull(),
-  category: text("category").notNull(),
-  tags: jsonb("tags").$type().notNull().default([]),
-  readingTime: integer("reading_time").notNull(),
-  isFeatured: boolean("is_featured").notNull().default(false),
-  isVisible: boolean("is_visible").notNull().default(true),
-  instagramPostUrl: text("instagram_post_url"),
-  twitterPostUrl: text("twitter_post_url"),
-  facebookPostUrl: text("facebook_post_url"),
-  youtubeVideoUrl: text("youtube_video_url"),
-  socialMediaHashtags: jsonb("social_media_hashtags").$type().notNull().default([]),
-  publishedAt: timestamp("published_at").notNull().defaultNow(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-});
-
-const destinations = pgTable("destinations", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  name: text("name").notNull(),
-  slug: text("slug").notNull().unique(),
-  description: text("description").notNull(),
-  detailedDescription: text("detailed_description").notNull(),
-  category: text("category").notNull(),
-  region: text("region").notNull(),
-  state: text("state").notNull(),
-  coordinates: jsonb("coordinates").$type().notNull(),
-  featuredImage: text("featured_image").notNull(),
-  bestTimeToVisit: text("best_time_to_visit").notNull(),
-  recommendedStay: text("recommended_stay").notNull(),
-  budgetRange: text("budget_range").notNull(),
-  highlights: jsonb("highlights").$type().notNull().default([]),
-  activities: jsonb("activities").$type().notNull().default([]),
-  rating: integer("rating").notNull().default(5),
-  difficulty: text("difficulty").notNull(),
-  relatedGalleryId: varchar("related_gallery_id"),
-  relatedBlogPosts: jsonb("related_blog_posts").$type().notNull().default([]),
-  isCurrentLocation: boolean("is_current_location").notNull().default(false),
-  isFeatured: boolean("is_featured").notNull().default(false),
-  isVisible: boolean("is_visible").notNull().default(true),
-  instagramPostUrl: text("instagram_post_url"),
-  twitterPostUrl: text("twitter_post_url"),
-  facebookPostUrl: text("facebook_post_url"),
-  youtubeVideoUrl: text("youtube_video_url"),
-  socialMediaHashtags: jsonb("social_media_hashtags").$type().notNull().default([]),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-});
-
-const galleryCollections = pgTable("gallery_collections", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  title: text("title").notNull(),
-  description: text("description").notNull(),
-  coverImage: text("cover_image").notNull(),
-  mediaCount: integer("media_count").notNull().default(0),
-  location: text("location"),
-  youtubeUrl: text("youtube_url"),
-  isVisible: boolean("is_visible").notNull().default(true),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-});
-
-const galleryMedia = pgTable("gallery_media", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  collectionId: varchar("collection_id").notNull(),
-  type: text("type").notNull(),
-  url: text("url").notNull(),
-  thumbnailUrl: text("thumbnail_url"),
-  title: text("title"),
-  caption: text("caption"),
-  embedCode: text("embed_code"),
-  linkUrl: text("link_url"),
-  sortOrder: integer("sort_order").notNull().default(0),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-});
-
-const travelPins = pgTable("travel_pins", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  name: text("name").notNull(),
-  description: text("description"),
-  coordinates: jsonb("coordinates").$type().notNull(),
-  country: text("country").notNull(),
-  city: text("city"),
-  visitedDate: timestamp("visited_date"),
-  pinType: text("pin_type").notNull().default('visited'),
-  pinColor: text("pin_color").notNull().default('#E07A3E'),
-  images: text("images").array().default([]),
-  tags: text("tags").array().default([]),
-  rating: integer("rating").default(0),
-  notes: text("notes"),
-  isVisible: boolean("is_visible").notNull().default(true),
-  instagramPostUrl: text("instagram_post_url"),
-  twitterPostUrl: text("twitter_post_url"),
-  facebookPostUrl: text("facebook_post_url"),
-  youtubeVideoUrl: text("youtube_video_url"),
-  socialMediaHashtags: jsonb("social_media_hashtags").$type().notNull().default([]),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-});
-
-const journeyTracking = pgTable("journey_tracking", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  currentLocation: text("current_location").notNull(),
-  currentCoordinates: jsonb("current_coordinates").$type().notNull(),
-  journeyProgress: integer("journey_progress").notNull().default(0),
-  daysTraveled: integer("days_traveled").notNull().default(0),
-  statesCovered: integer("states_covered").notNull().default(0),
-  distanceCovered: integer("distance_covered").notNull().default(0),
-  instagramStoryUrl: text("instagram_story_url"),
-  instagramReelUrl: text("instagram_reel_url"),
-  twitterUpdateUrl: text("twitter_update_url"),
-  youtubeShortUrl: text("youtube_short_url"),
-  lastUpdated: timestamp("last_updated").notNull().defaultNow(),
-});
-
-const newsletterSubscribers = pgTable("newsletter_subscribers", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  email: text("email").notNull().unique(),
-  isActive: boolean("is_active").notNull().default(true),
-  subscribedAt: timestamp("subscribed_at").notNull().defaultNow(),
-});
-
-const contactMessages = pgTable("contact_messages", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  name: text("name").notNull(),
-  email: text("email").notNull(),
-  subject: text("subject").notNull(),
-  message: text("message").notNull(),
-  isRead: boolean("is_read").notNull().default(false),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-});
-
-const homePageContent = pgTable("home_page_content", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  heroTitle: text("hero_title").notNull().default("Raw Roads,\nReal Discovery"),
-  heroSubtitle: text("hero_subtitle").notNull().default("Join Shashank's authentic 4-month journey across India, from Kashmir's valleys to Kanyakumari's shores, on just ₹500 per day"),
-  heroBackgroundImage: text("hero_background_image").notNull().default("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"),
-  exploreButtonText: text("explore_button_text").notNull().default("Explore Journey"),
-  diariesButtonText: text("diaries_button_text").notNull().default("Read Diaries"),
-  dailyBudget: text("daily_budget").notNull().default("₹500"),
-  mapSectionTitle: text("map_section_title").notNull().default("Live Journey Tracker"),
-  mapSectionDescription: text("map_section_description").notNull().default("Follow the real-time progress from the serene valleys of Kashmir to the southern tip of Kanyakumari. Each pin tells a story of discovery, challenge, and authentic Indian experiences."),
-  storiesSectionTitle: text("stories_section_title").notNull().default("Latest Travel Stories"),
-  storiesSectionDescription: text("stories_section_description").notNull().default("Authentic stories from the road - the struggles, discoveries, and unexpected connections that make solo travel transformative."),
-  guidesSectionTitle: text("guides_section_title").notNull().default("Travel Guides"),
-  guidesSectionDescription: text("guides_section_description").notNull().default("Comprehensive guides to the most incredible destinations on this journey. From planning to experiencing, get insider tips for authentic travel."),
-  gallerySectionTitle: text("gallery_section_title").notNull().default("Visual Journey"),
-  gallerySectionDescription: text("gallery_section_description").notNull().default("Every photograph tells a story of discovery, challenge, and the incredible diversity of landscapes, cultures, and moments that define authentic India travel."),
-  newsletterTitle: text("newsletter_title").notNull().default("Join the Journey"),
-  newsletterDescription: text("newsletter_description").notNull().default("Get weekly updates about new destinations, travel stories, and behind-the-scenes insights from the road. No spam, just authentic travel content."),
-  newsletterSubscribersCount: integer("newsletter_subscribers_count").notNull().default(342),
-  weeklyStoriesCount: integer("weekly_stories_count").notNull().default(24),
-  readRate: integer("read_rate").notNull().default(95),
-  journeyStartDate: text("journey_start_date").notNull().default("August 1, 2025"),
-  journeyStartLocation: text("journey_start_location").notNull().default("Srinagar, Kashmir"),
-  journeyStartDescription: text("journey_start_description").notNull().default("Dal Lake houseboats and mountain serenity"),
-  finalDestination: text("final_destination").notNull().default("Kanyakumari, Tamil Nadu"),
-  finalDestinationDescription: text("final_destination_description").notNull().default("Land's end where three seas meet"),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-});
+import {
+  users,
+  blogPosts,
+  destinations,
+  galleryCollections,
+  galleryMedia,
+  travelPins,
+  journeyTracking,
+  newsletterSubscribers,
+  contactMessages,
+  homePageContent
+} from '../shared/schema.js';
 
 // Initialize database connection
 let db;
