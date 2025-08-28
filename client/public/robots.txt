@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Disallow admin areas
+Disallow: /admin
+Disallow: /api/
+
+# Allow important pages
+Allow: /journey
+Allow: /letters
+Allow: /gallery
+Allow: /about
+
+# Sitemap location
+Sitemap: https://your-domain.com/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1

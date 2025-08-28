@@ -1,6 +1,7 @@
 // Vercel serverless API handler for travel blog
 import express from 'express';
 import session from 'express-session';
+import rateLimit from 'express-rate-limit';
 import pkg from 'pg';
 const { Pool } = pkg;
 import { drizzle } from 'drizzle-orm/node-postgres';
@@ -77,6 +78,38 @@ app.use((req, res, next) => {
     next();
   }
 });
+
+// Rate limiting middleware
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: {
+    error: 'Too many requests from this IP, please try again later.',
+    retryAfter: '15 minutes'
+  },
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+// Apply rate limiting to all API routes
+app.use('/api/', limiter);
+
+// Stricter rate limiting for authentication endpoints
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // Limit each IP to 5 login attempts per windowMs
+  message: {
+    error: 'Too many authentication attempts, please try again later.',
+    retryAfter: '15 minutes'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Apply stricter rate limiting to auth endpoints
+app.use('/api/auth/', authLimiter);
+app.use('/api/login', authLimiter);
+app.use('/api/register', authLimiter);
 
 // Create PostgreSQL session store for serverless environment
 const PgSession = connectPgSimple(session);

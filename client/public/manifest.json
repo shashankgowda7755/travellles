@@ -1,0 +1,84 @@
+{
+  "name": "Milesalone - Travel Blog",
+  "short_name": "Milesalone",
+  "description": "A personal travel blog sharing adventures, destinations, and stories from around the world",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F1EB",
+  "theme_color": "#E07A3E",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["travel", "lifestyle", "photography"],
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshot-narrow.png",
+      "sizes": "640x1136",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Journey",
+      "short_name": "Journey",
+      "description": "Explore travel destinations",
+      "url": "/journey",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Letters",
+      "short_name": "Letters",
+      "description": "Read travel stories",
+      "url": "/letters",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Gallery",
+      "short_name": "Gallery",
+      "description": "View travel photos",
+      "url": "/gallery",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

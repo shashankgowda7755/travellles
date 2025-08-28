@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Mountain, Menu, X } from "lucide-react";
 
 export default function Header() {
@@ -49,6 +50,7 @@ export default function Header() {
                   {item.name}
                 </Link>
               ))}
+              <ThemeToggle />
               <Link href="/admin">
                 <Button className="bg-brand-orange text-white hover:bg-brand-orange/90" data-testid="admin-button-desktop">
                   Login
@@ -105,6 +107,10 @@ export default function Header() {
                     {item.name}
                   </Link>
                 ))}
+                <div className="flex items-center justify-between pt-4">
+                  <span className="text-brand-brown font-medium">Theme</span>
+                  <ThemeToggle />
+                </div>
                 <Link href="/admin" onClick={() => setIsOpen(false)}>
                   <Button 
                     className="w-full bg-brand-orange text-white hover:bg-brand-orange/90"

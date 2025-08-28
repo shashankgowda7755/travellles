@@ -17,7 +17,7 @@ import {
   users,
   homePageContent 
 } from "@shared/schema";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and } from "drizzle-orm";
 
 // Authentication middleware
 const requireAuth = (req: any, res: any, next: any) => {
@@ -51,6 +51,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(posts);
     } catch (error) {
       res.json([]);
+    }
+  });
+
+  // Individual blog post by slug
+  app.get("/api/blog-posts/:slug", async (req, res) => {
+    try {
+      const [post] = await db.select().from(blogPosts)
+        .where(and(eq(blogPosts.slug, req.params.slug), eq(blogPosts.isVisible, true)));
+      
+      if (!post) {
+        return res.status(404).json({ message: "Blog post not found" });
+      }
+      res.json(post);
+    } catch (error) {
+      console.error("Error fetching blog post:", error);
+      res.status(500).json({ message: "Failed to fetch blog post" });
+    }
+  });
+
+  // Individual blog post by ID
+  app.get("/api/blog-posts/by-id/:id", async (req, res) => {
+    try {
+      const [post] = await db.select().from(blogPosts)
+        .where(and(eq(blogPosts.id, req.params.id), eq(blogPosts.isVisible, true)));
+      
+      if (!post) {
+        return res.status(404).json({ message: "Blog post not found" });
+      }
+      res.json(post);
+    } catch (error) {
+      console.error("Error fetching blog post by ID:", error);
+      res.status(500).json({ message: "Failed to fetch blog post by ID" });
     }
   });
 
