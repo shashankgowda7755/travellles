@@ -102,8 +102,22 @@ async function seedGalleryCollections() {
   console.log('🖼️ Seeding gallery collections...');
   
   const collections = [];
-  for (let i = 0; i < 8; i++) {
-    const city = getRandomElement(indianCities);
+  
+  // Add specific Jaipur collection first
+  const jaipurCollection = {
+    title: 'Jaipur Maha Photo Collection',
+    description: 'Stunning photographs from the Pink City of Jaipur, showcasing its royal heritage and vibrant culture',
+    coverImage: 'https://images.unsplash.com/photo-1599661046827-dacde6976549?w=800',
+    location: 'Jaipur, Rajasthan',
+    isVisible: true,
+    createdAt: new Date('2024-01-15'),
+    updatedAt: new Date()
+  };
+  collections.push(jaipurCollection);
+  
+  // Add other random collections
+  for (let i = 0; i < 7; i++) {
+    const city = getRandomElement(indianCities.filter(c => c.name !== 'Jaipur'));
     const collection = {
       title: `${city.name} Photo Collection`,
       description: `Beautiful photographs from ${city.name}, ${city.state}`,
@@ -126,17 +140,57 @@ async function seedGalleryMedia(collections) {
   
   const media = [];
   for (const collection of collections) {
-    const mediaCount = Math.floor(Math.random() * 8) + 3; // 3-10 media per collection
-    for (let i = 0; i < mediaCount; i++) {
-      const mediaItem = {
-        collectionId: collection.id,
-        type: 'photo',
-        url: getRandomElement(sampleImages),
-        caption: `Beautiful view from ${collection.title}`,
-        sortOrder: i,
-        createdAt: getRandomDate()
-      };
-      media.push(mediaItem);
+    // Special handling for Jaipur collection
+    if (collection.title === 'Jaipur Maha Photo Collection') {
+      const jaipurImages = [
+        {
+          collectionId: collection.id,
+          type: 'photo',
+          url: 'https://images.unsplash.com/photo-1599661046827-dacde6976549?w=800',
+          caption: 'Majestic Hawa Mahal - Palace of Winds in Jaipur',
+          sortOrder: 0,
+          createdAt: new Date('2024-01-15')
+        },
+        {
+          collectionId: collection.id,
+          type: 'photo',
+          url: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?w=800',
+          caption: 'Beautiful architecture of City Palace, Jaipur',
+          sortOrder: 1,
+          createdAt: new Date('2024-01-15')
+        },
+        {
+          collectionId: collection.id,
+          type: 'photo',
+          url: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800',
+          caption: 'Stunning view of Amber Fort overlooking Jaipur',
+          sortOrder: 2,
+          createdAt: new Date('2024-01-15')
+        },
+        {
+          collectionId: collection.id,
+          type: 'photo',
+          url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
+          caption: 'Vibrant streets and markets of Pink City Jaipur',
+          sortOrder: 3,
+          createdAt: new Date('2024-01-15')
+        }
+      ];
+      media.push(...jaipurImages);
+    } else {
+      // Regular random media for other collections
+      const mediaCount = Math.floor(Math.random() * 8) + 3; // 3-10 media per collection
+      for (let i = 0; i < mediaCount; i++) {
+        const mediaItem = {
+          collectionId: collection.id,
+          type: 'photo',
+          url: getRandomElement(sampleImages),
+          caption: `Beautiful view from ${collection.title}`,
+          sortOrder: i,
+          createdAt: getRandomDate()
+        };
+        media.push(mediaItem);
+      }
     }
   }
   
