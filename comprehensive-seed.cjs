@@ -102,7 +102,21 @@ async function seedGalleryCollections() {
   console.log('🖼️ Seeding gallery collections...');
   
   const collections = [];
-  for (let i = 0; i < 8; i++) {
+  
+  // Add the specific Jaipur collection
+  const jaipurCollection = {
+    title: 'Jaipur maha Photo Collection',
+    description: 'Beautiful photographs from Jaipur, Rajasthan',
+    coverImage: 'https://drive.google.com/file/d/1MBdTx-NVT1z6jcWfVtkmx4aI84tfn6n7/view?usp=sharing',
+    location: 'Jaipur, Rajasthan',
+    isVisible: true,
+    createdAt: new Date('2023-07-11T09:07:18.644Z'),
+    updatedAt: new Date('2025-08-28T16:11:31.095Z')
+  };
+  collections.push(jaipurCollection);
+  
+  // Add other random collections
+  for (let i = 0; i < 7; i++) {
     const city = getRandomElement(indianCities);
     const collection = {
       title: `${city.name} Photo Collection`,
@@ -126,17 +140,57 @@ async function seedGalleryMedia(collections) {
   
   const media = [];
   for (const collection of collections) {
-    const mediaCount = Math.floor(Math.random() * 8) + 3; // 3-10 media per collection
-    for (let i = 0; i < mediaCount; i++) {
-      const mediaItem = {
-        collectionId: collection.id,
-        type: 'photo',
-        url: getRandomElement(sampleImages),
-        caption: `Beautiful view from ${collection.title}`,
-        sortOrder: i,
-        createdAt: getRandomDate()
-      };
-      media.push(mediaItem);
+    // Special handling for Jaipur collection
+    if (collection.title === 'Jaipur maha Photo Collection') {
+      const jaipurImages = [
+        {
+          collectionId: collection.id,
+          type: 'photo',
+          url: 'https://drive.google.com/file/d/1MBdTx-NVT1z6jcWfVtkmx4aI84tfn6n7/view?usp=sharing',
+          caption: 'Jaipur Palace View 1',
+          sortOrder: 0,
+          createdAt: new Date('2023-07-11T09:07:18.644Z')
+        },
+        {
+          collectionId: collection.id,
+          type: 'photo',
+          url: 'https://drive.google.com/file/d/1MBdTx-NVT1z6jcWfVtkmx4aI84tfn6n7/view?usp=sharing',
+          caption: 'Jaipur Palace View 2',
+          sortOrder: 1,
+          createdAt: new Date('2023-07-11T09:07:18.644Z')
+        },
+        {
+          collectionId: collection.id,
+          type: 'photo',
+          url: 'https://drive.google.com/file/d/1MBdTx-NVT1z6jcWfVtkmx4aI84tfn6n7/view?usp=sharing',
+          caption: 'Jaipur Palace View 3',
+          sortOrder: 2,
+          createdAt: new Date('2023-07-11T09:07:18.644Z')
+        },
+        {
+          collectionId: collection.id,
+          type: 'photo',
+          url: 'https://drive.google.com/file/d/1MBdTx-NVT1z6jcWfVtkmx4aI84tfn6n7/view?usp=sharing',
+          caption: 'Jaipur Palace View 4',
+          sortOrder: 3,
+          createdAt: new Date('2023-07-11T09:07:18.644Z')
+        }
+      ];
+      media.push(...jaipurImages);
+    } else {
+      // Regular random media for other collections
+      const mediaCount = Math.floor(Math.random() * 8) + 3; // 3-10 media per collection
+      for (let i = 0; i < mediaCount; i++) {
+        const mediaItem = {
+          collectionId: collection.id,
+          type: 'photo',
+          url: getRandomElement(sampleImages),
+          caption: `Beautiful view from ${collection.title}`,
+          sortOrder: i,
+          createdAt: getRandomDate()
+        };
+        media.push(mediaItem);
+      }
     }
   }
   
