@@ -24,6 +24,23 @@ const pool = new Pool({
 
 const db = drizzle({ client: pool, schema });
 
+// Clear existing data
+async function clearDatabase() {
+  console.log('🗑️ Clearing existing database data...');
+  
+  try {
+    await db.delete(galleryMedia);
+    await db.delete(galleryCollections);
+    await db.delete(blogPosts);
+    await db.delete(destinations);
+    await db.delete(travelPins);
+    await db.delete(homePageContent);
+    console.log('✅ Database cleared successfully');
+  } catch (error) {
+    console.log('⚠️ Some tables may not exist yet, continuing...');
+  }
+}
+
 // Sample data arrays
 const indianCities = [
   { name: 'Mumbai', state: 'Maharashtra', lat: 19.0760, lng: 72.8777 },
@@ -116,7 +133,7 @@ async function seedGalleryCollections() {
   collections.push(jaipurCollection);
   
   // Add other random collections
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 14; i++) {
     const city = getRandomElement(indianCities.filter(c => c.name !== 'Jaipur'));
     const collection = {
       title: `${city.name} Photo Collection`,
@@ -209,7 +226,7 @@ async function seedDestinations(collections) {
     
     const destination = {
       name: `${city.name} Adventure`,
-      slug: generateSlug(`${city.name} adventure ${i + 1}`),
+      slug: generateSlug(`${city.name} adventure ${i + 1} ${Date.now()}`),
       description: `Explore the beautiful ${city.name} and discover its hidden gems`,
       detailedDescription: `${city.name} offers an incredible travel experience with rich culture, stunning landscapes, and unforgettable adventures. From historical monuments to natural wonders, this destination has something for every traveler.`,
       category: getRandomElement(categories),
@@ -261,7 +278,7 @@ async function seedTravelPins() {
   console.log('📍 Seeding travel pins...');
   
   const pins = [];
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 15; i++) {
     const city = getRandomElement(indianCities);
     const visitedDate = getRandomDate();
     
@@ -288,6 +305,40 @@ async function seedTravelPins() {
   const insertedPins = await db.insert(travelPins).values(pins).returning();
   console.log(`✅ Created ${insertedPins.length} travel pins`);
   return insertedPins;
+}
+
+async function seedBlogPosts(destinations_data) {
+  console.log('📝 Seeding blog posts...');
+  
+  const blogCategories = ['adventure', 'culture', 'food', 'people', 'places'];
+  const posts = [];
+  
+  for (let i = 0; i < 15; i++) {
+    const destination = getRandomElement(destinations_data);
+    const category = getRandomElement(blogCategories);
+    const title = `${getRandomElement(['Exploring', 'Discovering', 'Journey to', 'Adventures in', 'Hidden Gems of'])} ${destination.name}`;
+    
+    const post = {
+      title,
+      slug: generateSlug(`${title} ${Date.now()} ${i}`),
+      excerpt: `Join me on an incredible journey to ${destination.name}. This ${category} adventure will take you through amazing experiences, local culture, and unforgettable moments.`,
+      content: `# ${title}\n\n![${destination.name}](${destination.featuredImage})\n\n## Introduction\n\nWelcome to my latest adventure in ${destination.name}! This incredible destination offers so much more than meets the eye.\n\n## The Journey\n\nTraveling to ${destination.name} was an adventure in itself. The journey took me through some of the most beautiful landscapes I've ever seen.\n\n## What Makes This Place Special\n\n${destination.description}\n\n## Local Culture and People\n\nThe people here are incredibly welcoming and friendly. Their rich culture and traditions add so much depth to the travel experience.\n\n## Final Thoughts\n\n${destination.name} exceeded all my expectations. This ${category} adventure has given me memories that will last a lifetime.\n\n---\n\n*Follow along for more authentic travel stories and destination guides.*`,
+      featuredImage: destination.featuredImage,
+      category,
+      tags: getRandomElements(['travel', 'india', 'adventure', 'culture', 'photography', 'backpacking', 'solo-travel', 'budget-travel'], 4),
+      readingTime: Math.floor(Math.random() * 5) + 3, // 3-7 minutes
+      isFeatured: Math.random() > 0.8,
+      isVisible: true,
+      publishedAt: getRandomDate(),
+      createdAt: getRandomDate(),
+      updatedAt: new Date()
+    };
+    posts.push(post);
+  }
+  
+  const insertedPosts = await db.insert(blogPosts).values(posts).returning();
+  console.log(`✅ Created ${insertedPosts.length} blog posts`);
+  return insertedPosts;
 }
 
 async function seedHomeContent() {
@@ -317,20 +368,26 @@ async function main() {
   try {
     console.log('🚀 Starting comprehensive database seeding...');
     
+    // Clear existing data first
+    await clearDatabase();
+    
     // Seed in order due to foreign key dependencies
     const collections = await seedGalleryCollections();
     await seedGalleryMedia(collections);
-    await seedDestinations(collections);
+    const destinations_data = await seedDestinations(collections);
     await seedTravelPins();
+    await seedBlogPosts(destinations_data);
     await seedHomeContent();
     
     console.log('\n🎉 Database seeding completed successfully!');
     console.log('📊 Summary:');
-    console.log(`   - ${collections.length} gallery collections`);
+    console.log(`   - ${collections.length} Gallery Collections (including Jaipur collection)`);
     console.log(`   - Gallery media items`);
-    console.log(`   - 15 destinations`);
-    console.log(`   - 25 travel pins`);
+    console.log(`   - 15 Destinations`);
+    console.log(`   - 15 Travel Pins`);
+    console.log(`   - 15 Blog Posts`);
     console.log(`   - Home page content`);
+    console.log('\n✅ All sections now have 15 dummy items plus the specific Jaipur collection!');
     
   } catch (error) {
     console.error('❌ Error seeding database:', error);
