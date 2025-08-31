@@ -10,6 +10,14 @@ import ErrorBoundary from "@/components/error-boundary";
 export default function Journey() {
   const { data: journey, isLoading, error, isError } = useJourney();
 
+  // Fallback journey data for production issues
+  const fallbackJourney = {
+    currentLocation: "Mysuru, Karnataka",
+    journeyProgress: 65
+  };
+
+  const safeJourney = journey || fallbackJourney;
+
   useEffect(() => {
     console.log('Journey page mounted');
     console.log('Journey data:', journey);
@@ -91,14 +99,14 @@ export default function Journey() {
               <div className="flex items-center space-x-3 mb-2">
                 <div className="w-4 h-4 bg-brand-orange rounded-full animate-pulse"></div>
                 <span className="font-semibold text-brand-brown" data-testid="current-location-status">
-                  Currently in: {journey?.currentLocation || "Mysuru, Karnataka"}
+                  Currently in: {safeJourney.currentLocation}
                 </span>
               </div>
               <p className="text-gray-600">Exploring the royal heritage and palace architecture</p>
             </div>
             <div className="text-right">
               <div className="text-2xl font-bold text-brand-orange" data-testid="journey-completion">
-                {journey?.journeyProgress || 65}%
+                {safeJourney.journeyProgress}%
               </div>
               <div className="text-sm text-gray-600">Journey Complete</div>
             </div>
