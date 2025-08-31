@@ -85,10 +85,10 @@ export default function Journey() {
         {/* Header */}
         <div className="text-center mb-16" data-testid="journey-header">
           <h1 className="font-playfair text-3xl lg:text-5xl font-bold text-brand-brown mb-6">
-            Journey Through India
+            Explore My Journey
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover the destinations that shaped this incredible journey. From snow-capped mountains to tropical coastlines, each place offers unique experiences and authentic insights.
+            Discover incredible moments and experiences through my personal journey. Each story tells a unique tale of growth, adventure, and self-discovery.
           </p>
         </div>
 
@@ -142,7 +142,7 @@ export default function Journey() {
         <div data-testid="destinations-section">
           <div className="text-center mb-12">
             <h2 className="font-playfair text-2xl lg:text-4xl font-bold text-brand-brown mb-4">
-              Explore Destinations
+              View All Photo Collections
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Each destination offers its own unique character, challenges, and rewards. Filter by category, region, or search for specific places.

@@ -32,7 +32,7 @@ export default function Header() {
           <nav className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2" data-testid="logo-desktop">
               <Mountain className="text-brand-orange text-2xl" />
-              <span className="font-playfair text-2xl font-bold text-brand-brown">Milesalone</span>
+              <span className="font-playfair text-2xl font-bold text-brand-brown">Miles Alone</span>
             </Link>
             
             <div className="hidden lg:flex items-center space-x-8">
@@ -66,7 +66,7 @@ export default function Header() {
         <div className="flex items-center justify-between p-4">
           <Link href="/" className="flex items-center space-x-2" data-testid="logo-mobile">
             <Mountain className="text-brand-orange text-xl" />
-            <span className="font-playfair text-xl font-bold text-brand-brown">Milesalone</span>
+            <span className="font-playfair text-xl font-bold text-brand-brown">Miles Alone</span>
           </Link>
           
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -79,7 +79,7 @@ export default function Header() {
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center space-x-2">
                   <Mountain className="text-brand-orange text-xl" />
-                  <span className="font-playfair text-xl font-bold text-brand-brown">Milesalone</span>
+                  <span className="font-playfair text-xl font-bold text-brand-brown">Miles Alone</span>
                 </div>
                 <Button 
                   variant="ghost" 

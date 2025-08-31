@@ -104,7 +104,7 @@ export default function About() {
 
             {/* Contact and Support */}
             <div className="flex flex-col sm:flex-row gap-4" data-testid="about-actions">
-              <a href="mailto:hello@milesalone.com">
+              <a href="mailto:contact@milesalone.com">
                 <Button className="bg-brand-orange text-white hover:bg-brand-orange/90 px-6 py-3 font-medium">
                   <Mail className="mr-2 h-4 w-4" />
                   Get in Touch
@@ -141,11 +141,11 @@ export default function About() {
               <CardContent className="p-0">
                 <h3 className="font-playfair text-2xl font-bold text-brand-brown mb-6">Connect Directly</h3>
                 <div className="space-y-4">
-                  <a href="mailto:hello@milesalone.com" className="flex items-center text-gray-600 hover:text-brand-orange transition-colors">
+                  <a href="mailto:contact@milesalone.com" className="flex items-center text-gray-600 hover:text-brand-orange transition-colors">
                     <Mail className="text-brand-orange mr-4 h-5 w-5" />
                     <div>
                       <div className="font-medium">Email</div>
-                      <div>hello@milesalone.com</div>
+                      <div>contact@milesalone.com</div>
                     </div>
                   </a>
                   <div className="flex items-center text-gray-600">

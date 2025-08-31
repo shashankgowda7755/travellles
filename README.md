@@ -1,13 +1,13 @@
-# 🌍 Milesalone Travel Blog
+# 🚀 Miles Alone - Personal Journey Platform
 
-A comprehensive travel blog platform for documenting authentic travel experiences across India. Built with React, TypeScript, Express, and PostgreSQL.
+A comprehensive personal journey platform for documenting life experiences, adventures, and personal growth. Built with React, TypeScript, Express, and PostgreSQL.
 
 ## ✨ Features
 
 - 🔐 **Secure Admin Panel** - Full content management system
-- 📝 **Blog System** - Create and manage travel stories
-- 📸 **Gallery Management** - Photo collections with YouTube integration
-- 🗺️ **Interactive Journey Map** - Real-time travel tracking
+- 📝 **Story System** - Create and manage personal experiences and life stories
+- 📸 **Gallery Management** - Photo collections with multimedia integration
+- 🗺️ **Interactive Journey Map** - Real-time life journey tracking
 - 📧 **Newsletter System** - Email subscription management
 - 📱 **Mobile Responsive** - Optimized for all devices
 - ⚡ **Performance Optimized** - Fast loading and SEO ready

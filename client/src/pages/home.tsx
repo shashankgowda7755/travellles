@@ -364,7 +364,7 @@ export default function Home() {
                 className="bg-brand-green text-white hover:bg-brand-green/90 px-8 py-4 font-semibold"
                 data-testid="view-all-guides-button"
               >
-                View All Guides
+                View All Stories
               </Button>
             </Link>
           </div>

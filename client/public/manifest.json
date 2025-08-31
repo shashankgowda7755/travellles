@@ -1,7 +1,7 @@
 {
-  "name": "Milesalone - Travel Blog",
-  "short_name": "Milesalone",
-  "description": "A personal travel blog sharing adventures, destinations, and stories from around the world",
+  "name": "Miles Alone - Personal Journey",
+  "short_name": "Miles Alone",
+  "description": "A personal journey through life's adventures, sharing experiences, stories, and moments from solo travels and personal growth",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#F5F1EB",
@@ -9,7 +9,7 @@
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "en",
-  "categories": ["travel", "lifestyle", "photography"],
+  "categories": ["lifestyle", "personal", "journey", "adventure", "blog"],
   "icons": [
     {
       "src": "/icon-192x192.png",

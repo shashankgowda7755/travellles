@@ -10,10 +10,10 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-2 mb-6">
               <Mountain className="text-brand-orange text-2xl" />
-              <span className="font-playfair text-2xl font-bold">Milesalone</span>
+              <span className="font-playfair text-2xl font-bold">Miles Alone</span>
             </div>
             <p className="text-gray-300 mb-4">
-              Documenting authentic India travel experiences, one story at a time. From Kashmir to Kanyakumari on ₹500 per day.
+              Sharing personal journey experiences, life adventures, and authentic stories from solo travels and personal growth.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-300 hover:text-brand-orange transition-colors" data-testid="social-instagram">
@@ -25,7 +25,7 @@ export default function Footer() {
               <a href="#" className="text-gray-300 hover:text-brand-orange transition-colors" data-testid="social-twitter">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="mailto:hello@milesalone.com" className="text-gray-300 hover:text-brand-orange transition-colors" data-testid="social-email">
+              <a href="mailto:contact@milesalone.com" className="text-gray-300 hover:text-brand-orange transition-colors" data-testid="social-email">
                 <Mail className="h-5 w-5" />
               </a>
             </div>

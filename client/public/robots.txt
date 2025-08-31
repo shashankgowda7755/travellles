@@ -12,7 +12,7 @@ Allow: /gallery
 Allow: /about
 
 # Sitemap location
-Sitemap: https://your-domain.com/sitemap.xml
+Sitemap: https://milesalone.com/sitemap.xml
 
 # Crawl delay (optional)
 Crawl-delay: 1

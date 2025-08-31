@@ -1,8 +1,12 @@
 {
-  "name": "rest-express",
+  "name": "miles-alone",
   "version": "1.0.0",
+  "description": "Miles Alone - A personal journey through life's adventures and experiences",
   "type": "module",
   "license": "MIT",
+  "keywords": ["miles-alone", "personal-journey", "blog", "experiences", "solo-travel", "life-stories"],
+  "author": "Miles Alone",
+  "homepage": "https://milesalone.com",
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx server/index.ts",
     "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",

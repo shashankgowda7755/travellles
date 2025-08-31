@@ -351,7 +351,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/login", (req, res) => {
     const { username, password } = req.body;
     
-    if (username === "admins" && password === "Travel@2025") {
+    if (username === "admin" && password === "Travel@2025") {
       req.session.userId = "admin";
       res.json({ success: true, message: "Login successful" });
     } else {
