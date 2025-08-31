@@ -24,7 +24,7 @@ export default function About() {
             {/* Portrait photo placeholder */}
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=1000"
+                src="https://i.postimg.cc/sQxd5ry0/IMG20250424065834.jpg"
                 alt="Shashank with backpack in mountain setting"
                 className="rounded-2xl shadow-2xl w-full h-auto object-cover"
                 data-testid="traveler-portrait"
