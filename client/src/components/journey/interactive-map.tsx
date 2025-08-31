@@ -22,10 +22,12 @@ export default function InteractiveMap({ height = "500px", showPins = true }: In
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
 
+    let map: L.Map | null = null;
+
     try {
       console.log('Initializing Leaflet map...');
       // Initialize map - centered on India
-      const map = L.map(mapRef.current).setView([20.5937, 78.9629], 5);
+      map = L.map(mapRef.current).setView([20.5937, 78.9629], 5);
       mapInstanceRef.current = map;
 
       // Add tile layer
@@ -36,10 +38,11 @@ export default function InteractiveMap({ height = "500px", showPins = true }: In
       console.log('Leaflet map initialized successfully');
     } catch (error) {
       console.error('Error initializing Leaflet map:', error);
+      return; // Exit early if map initialization fails
     }
 
     // Add travel pins if data is available and showPins is true
-    if (showPins && travelPins) {
+    if (showPins && travelPins && map) {
       travelPins.forEach((pin: TravelPin) => {
         // Validate coordinates before creating marker
         if (!pin.coordinates || 

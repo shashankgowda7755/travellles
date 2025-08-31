@@ -25,6 +25,11 @@ let db;
 let dbPool;
 const initializeDatabase = async () => {
   if (!db) {
+    // Check for required environment variables
+    if (!process.env.DATABASE_URL) {
+      throw new Error('DATABASE_URL environment variable is required');
+    }
+    
     // Create a single pool instance to be reused
     if (!dbPool) {
       dbPool = new Pool({
@@ -94,15 +99,7 @@ const limiter = rateLimit({
 // Apply rate limiting to all API routes
 app.use('/api/', limiter);
 
-// Health check endpoint
-app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development',
-    database: !!process.env.DATABASE_URL ? 'connected' : 'not configured'
-  });
-});
+// Simple health check endpoint (removed duplicate)
 
 // Stricter rate limiting for authentication endpoints
 const authLimiter = rateLimit({
@@ -168,20 +165,35 @@ app.get("/api/test", (req, res) => {
 
 // Health check endpoint
 app.get("/api/health", async (req, res) => {
+  const healthCheck = {
+    status: "healthy",
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development',
+    database: "unknown",
+    envVars: {
+      DATABASE_URL: !!process.env.DATABASE_URL,
+      SESSION_SECRET: !!process.env.SESSION_SECRET,
+      NODE_ENV: !!process.env.NODE_ENV
+    }
+  };
+
   try {
+    if (!process.env.DATABASE_URL) {
+      throw new Error('DATABASE_URL environment variable is missing');
+    }
+    
     await initializeDatabase();
-    res.json({ 
-      status: "healthy", 
-      timestamp: new Date().toISOString(),
-      database: "connected"
-    });
+    
+    // Test database connection
+    await dbPool.query('SELECT 1');
+    
+    healthCheck.database = "connected";
+    res.json(healthCheck);
   } catch (error) {
-    res.status(500).json({ 
-      status: "unhealthy", 
-      timestamp: new Date().toISOString(),
-      database: "disconnected",
-      error: error.message
-    });
+    healthCheck.status = "unhealthy";
+    healthCheck.database = "disconnected";
+    healthCheck.error = error.message;
+    res.status(500).json(healthCheck);
   }
 });
 
