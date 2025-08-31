@@ -160,7 +160,7 @@ export default function DestinationDetail() {
             </Card>
 
             {/* Highlights */}
-            {destination.highlights && destination.highlights.length > 0 && (
+            {Array.isArray(destination.highlights) && destination.highlights.length > 0 && (
               <Card data-testid="destination-highlights">
                 <CardHeader>
                   <CardTitle className="font-playfair text-2xl text-brand-brown">
@@ -181,7 +181,7 @@ export default function DestinationDetail() {
             )}
 
             {/* Activities */}
-            {destination.activities && destination.activities.length > 0 && (
+            {Array.isArray(destination.activities) && destination.activities.length > 0 && (
               <Card data-testid="destination-activities">
                 <CardHeader>
                   <CardTitle className="font-playfair text-2xl text-brand-brown">

@@ -60,6 +60,15 @@ export default function DestinationGrid() {
       selectedCategory !== "All Categories" ? selectedCategory : undefined,
       selectedRegion !== "All Regions" ? selectedRegion : undefined
     ],
+    queryFn: async () => {
+      const response = await fetch('/api/destinations', {
+        credentials: 'include',
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to fetch destinations: ${response.status}`);
+      }
+      return response.json();
+    },
   });
 
   console.log('DestinationGrid render:', { destinations, isLoading, error, isError });

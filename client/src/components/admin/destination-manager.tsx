@@ -155,7 +155,7 @@ export default function DestinationManager() {
     setEditingDestination(destination);
     editForm.reset({
       ...destination,
-      highlights: destination.highlights.join(', '),
+      highlights: Array.isArray(destination.highlights) ? destination.highlights.join(', ') : '',
       activities: destination.activities.join(', '),
     });
   };
@@ -542,12 +542,12 @@ export default function DestinationManager() {
                     <Badge variant="outline">{destination.difficulty}</Badge>
                   </div>
                   <div className="flex gap-1">
-                    {destination.highlights.slice(0, 3).map((highlight, index) => (
+                    {Array.isArray(destination.highlights) && destination.highlights.slice(0, 3).map((highlight, index) => (
                       <Badge key={index} variant="outline" className="text-xs">
                         {highlight}
                       </Badge>
                     ))}
-                    {destination.highlights.length > 3 && (
+                    {Array.isArray(destination.highlights) && destination.highlights.length > 3 && (
                       <Badge variant="outline" className="text-xs">
                         +{destination.highlights.length - 3} more
                       </Badge>

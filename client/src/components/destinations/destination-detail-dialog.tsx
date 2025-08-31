@@ -136,7 +136,7 @@ export default function DestinationDetailDialog({ destination, isOpen, onClose }
             <div className="space-y-4">
               <h3 className="font-playfair text-lg font-semibold text-brand-brown">Activities</h3>
               <div className="flex flex-wrap gap-2" data-testid="destination-dialog-activities">
-                {destination.activities.map((activity, index) => (
+                {Array.isArray(destination.activities) && destination.activities.map((activity, index) => (
                   <Badge key={index} variant="secondary" className="text-xs">
                     {activity}
                   </Badge>
@@ -151,7 +151,7 @@ export default function DestinationDetailDialog({ destination, isOpen, onClose }
           <div>
             <h3 className="font-playfair text-lg font-semibold text-brand-brown mb-3">Highlights</h3>
             <ul className="space-y-2" data-testid="destination-dialog-highlights">
-              {destination.highlights.map((highlight, index) => (
+              {Array.isArray(destination.highlights) && destination.highlights.map((highlight, index) => (
                 <li key={index} className="flex items-start space-x-2">
                   <Mountain className="w-4 h-4 text-brand-orange mt-0.5 flex-shrink-0" />
                   <span className="text-gray-700">{highlight}</span>

@@ -108,7 +108,7 @@ export default function DestinationCard({ destination }: DestinationCardProps) {
           </div>
           
           <div className="flex flex-wrap gap-2 mb-4" data-testid="destination-card-highlights">
-            {destination.highlights.slice(0, 3).map((highlight, index) => (
+            {Array.isArray(destination.highlights) && destination.highlights.slice(0, 3).map((highlight, index) => (
               <Badge key={index} variant="secondary" className="bg-brand-cream text-brand-brown">
                 {highlight}
               </Badge>

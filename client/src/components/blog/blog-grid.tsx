@@ -22,6 +22,18 @@ export default function BlogGrid() {
 
   const { data: posts = [], isLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog-posts", selectedCategory !== "all" ? selectedCategory : undefined],
+    queryFn: async () => {
+      const url = selectedCategory !== "all" 
+        ? `/api/blog-posts?category=${encodeURIComponent(selectedCategory)}`
+        : '/api/blog-posts';
+      const response = await fetch(url, {
+        credentials: 'include',
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to fetch blog posts: ${response.status}`);
+      }
+      return response.json();
+    },
   });
 
   const filteredPosts = posts.filter(post => {
