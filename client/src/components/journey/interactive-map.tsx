@@ -13,21 +13,30 @@ export default function InteractiveMap({ height = "500px", showPins = true }: In
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
 
-  const { data: travelPins } = useQuery<TravelPin[]>({
+  const { data: travelPins, isLoading, error } = useQuery<TravelPin[]>({
     queryKey: ['/api/travel-pins'],
   });
+
+  console.log('InteractiveMap render:', { travelPins, isLoading, error, showPins });
 
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
 
-    // Initialize map - centered on India
-    const map = L.map(mapRef.current).setView([20.5937, 78.9629], 5);
-    mapInstanceRef.current = map;
+    try {
+      console.log('Initializing Leaflet map...');
+      // Initialize map - centered on India
+      const map = L.map(mapRef.current).setView([20.5937, 78.9629], 5);
+      mapInstanceRef.current = map;
 
-    // Add tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+      // Add tile layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+      
+      console.log('Leaflet map initialized successfully');
+    } catch (error) {
+      console.error('Error initializing Leaflet map:', error);
+    }
 
     // Add travel pins if data is available and showPins is true
     if (showPins && travelPins) {

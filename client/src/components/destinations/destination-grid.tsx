@@ -54,13 +54,15 @@ export default function DestinationGrid() {
     selectedRegion !== "All Regions" || 
     sortBy !== "rating";
 
-  const { data: destinations = [], isLoading } = useQuery<Destination[]>({
+  const { data: destinations = [], isLoading, error, isError } = useQuery<Destination[]>({
     queryKey: [
       "/api/destinations", 
       selectedCategory !== "All Categories" ? selectedCategory : undefined,
       selectedRegion !== "All Regions" ? selectedRegion : undefined
     ],
   });
+
+  console.log('DestinationGrid render:', { destinations, isLoading, error, isError });
 
   const filteredAndSortedDestinations = destinations
     .filter(destination => {
