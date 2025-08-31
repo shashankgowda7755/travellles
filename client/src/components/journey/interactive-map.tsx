@@ -32,6 +32,16 @@ export default function InteractiveMap({ height = "500px", showPins = true }: In
     // Add travel pins if data is available and showPins is true
     if (showPins && travelPins) {
       travelPins.forEach((pin: TravelPin) => {
+        // Validate coordinates before creating marker
+        if (!pin.coordinates || 
+            typeof pin.coordinates.lat !== 'number' || 
+            typeof pin.coordinates.lng !== 'number' ||
+            isNaN(pin.coordinates.lat) || 
+            isNaN(pin.coordinates.lng)) {
+          console.warn(`Invalid coordinates for pin ${pin.name}:`, pin.coordinates);
+          return; // Skip this pin
+        }
+
         // Create custom icon based on pin type and color
         const icon = L.divIcon({
           className: 'custom-pin-marker',
