@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,5 +26,8 @@ jobs:
     - name: Deploy to Vercel
       uses: amondnet/vercel-action@v25
       with:
-        vercel-token: ${{ secrets.VERCEL_TOKEN }}`n        vercel-org-id: ${{ secrets.ORG_ID }}`n        vercel-project-id: ${{ secrets.PROJECT_ID }}`n        working-directory: ./
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.ORG_ID }}
+        vercel-project-id: ${{ secrets.PROJECT_ID }}
+        working-directory: ./
 
