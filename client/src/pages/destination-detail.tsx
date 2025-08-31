@@ -9,6 +9,7 @@ import DestinationMap from "@/components/destinations/destination-map";
 import RelatedContent from "@/components/destinations/related-content";
 import SocialMediaDisplay from "@/components/social-media-display";
 import DetailedSocialShare from "@/components/detailed-social-share";
+
 import { Destination } from "@shared/schema";
 
 export default function DestinationDetail() {
@@ -261,33 +262,39 @@ export default function DestinationDetail() {
             {/* Enhanced Map Component */}
             <DestinationMap destination={destination} />
 
-            {/* Detailed Social Sharing */}
-            <DetailedSocialShare
-              title={destination.name}
-              description={destination.description}
-              url={window.location.href}
-              hashtags={destination.socialMediaHashtags || []}
-              type="destination"
-              instagramUrl={destination.instagramPostUrl || undefined}
-              youtubeUrl={destination.youtubeVideoUrl || undefined}
-            />
 
-            {/* Social Media Integration */}
-            <SocialMediaDisplay
-              data={{
-                instagramPostUrl: destination.instagramPostUrl || undefined,
-                twitterPostUrl: destination.twitterPostUrl || undefined,
-                facebookPostUrl: destination.facebookPostUrl || undefined,
-                youtubeVideoUrl: destination.youtubeVideoUrl || undefined,
-                socialMediaHashtags: destination.socialMediaHashtags || undefined
-              }}
-              title="Follow this destination on social media"
-              compact={false}
-              showHashtags={true}
-            />
           </div>
         </div>
 
+
+        {/* Detailed Social Sharing */}
+        <div className="mt-12 mb-8">
+          <DetailedSocialShare
+            title={destination.name}
+            description={destination.description}
+            url={window.location.href}
+            hashtags={destination.socialMediaHashtags || []}
+            type="destination"
+            instagramUrl={destination.instagramPostUrl || undefined}
+            youtubeUrl={destination.youtubeVideoUrl || undefined}
+          />
+        </div>
+
+        {/* Social Media Integration */}
+        <div className="mt-8">
+          <SocialMediaDisplay
+            data={{
+              instagramPostUrl: destination.instagramPostUrl || undefined,
+              twitterPostUrl: destination.twitterPostUrl || undefined,
+              facebookPostUrl: destination.facebookPostUrl || undefined,
+              youtubeVideoUrl: destination.youtubeVideoUrl || undefined,
+              socialMediaHashtags: destination.socialMediaHashtags || undefined
+            }}
+            title="Follow this destination on social media"
+            compact={false}
+            showHashtags={true}
+          />
+        </div>
 
         {/* Maps and Photos Section */}
         <div className="mt-12 space-y-6 mb-16">

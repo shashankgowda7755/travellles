@@ -126,7 +126,7 @@ async function seedGalleryCollections() {
     description: 'Stunning photographs from the Pink City of Jaipur, showcasing its royal heritage and vibrant culture',
     coverImage: 'https://images.unsplash.com/photo-1599661046827-dacde6976549?w=800',
     location: 'Jaipur, Rajasthan',
-    isVisible: true,
+    isVisible: false,
     createdAt: new Date('2024-01-15'),
     updatedAt: new Date()
   };
@@ -140,7 +140,7 @@ async function seedGalleryCollections() {
       description: `Beautiful photographs from ${city.name}, ${city.state}`,
       coverImage: getRandomElement(sampleImages),
       location: `${city.name}, ${city.state}`,
-      isVisible: Math.random() > 0.2,
+      isVisible: false,
       createdAt: getRandomDate(),
       updatedAt: new Date()
     };
@@ -262,7 +262,7 @@ async function seedDestinations(collections) {
       relatedGalleryId: relatedGallery?.id || null,
       isCurrentLocation: i === 0, // Make first one current
       isFeatured: Math.random() > 0.7,
-      isVisible: Math.random() > 0.1,
+      isVisible: false,
       createdAt: getRandomDate(),
       updatedAt: new Date()
     };
@@ -295,7 +295,7 @@ async function seedTravelPins() {
       tags: getRandomElements(['travel', 'adventure', 'culture', 'food', 'photography', 'nature'], 3),
       pinType: getRandomElement(pinTypes),
       pinColor: getRandomElement(pinColors),
-      isVisible: Math.random() > 0.1,
+      isVisible: false,
       createdAt: visitedDate,
       updatedAt: new Date()
     };
@@ -328,7 +328,7 @@ async function seedBlogPosts(destinations_data) {
       tags: getRandomElements(['travel', 'india', 'adventure', 'culture', 'photography', 'backpacking', 'solo-travel', 'budget-travel'], 4),
       readingTime: Math.floor(Math.random() * 5) + 3, // 3-7 minutes
       isFeatured: Math.random() > 0.8,
-      isVisible: true,
+      isVisible: false,
       publishedAt: getRandomDate(),
       createdAt: getRandomDate(),
       updatedAt: new Date()

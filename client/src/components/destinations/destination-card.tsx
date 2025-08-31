@@ -4,8 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import DestinationDetailDialog from "./destination-detail-dialog";
-import SocialMediaDisplay from "@/components/social-media-display";
 import DestinationCardShare from "./destination-card-share";
+import SocialMediaDisplay from "@/components/social-media-display";
 import type { Destination } from "@shared/schema";
 
 interface DestinationCardProps {
@@ -159,20 +159,20 @@ export default function DestinationCard({ destination }: DestinationCardProps) {
             <DestinationCardShare destination={destination} />
           </div>
 
-          {/* Social Media Sharing */}
-          <div onClick={(e) => e.stopPropagation()}>
-            <SocialMediaDisplay
-              data={{
-                instagramPostUrl: destination.instagramPostUrl || undefined,
-                twitterPostUrl: destination.twitterPostUrl || undefined,
-                facebookPostUrl: destination.facebookPostUrl || undefined,
-                youtubeVideoUrl: destination.youtubeVideoUrl || undefined,
-                socialMediaHashtags: destination.socialMediaHashtags || undefined
-              }}
-              compact={true}
-              showHashtags={true}
-            />
-          </div>
+          {/* Social Media Integration */}
+          <SocialMediaDisplay
+            data={{
+              instagramPostUrl: destination.instagramPostUrl || undefined,
+              twitterPostUrl: destination.twitterPostUrl || undefined,
+              facebookPostUrl: destination.facebookPostUrl || undefined,
+              youtubeVideoUrl: destination.youtubeVideoUrl || undefined,
+              socialMediaHashtags: destination.socialMediaHashtags || undefined
+            }}
+            title="Follow this destination"
+            compact={true}
+            showHashtags={false}
+          />
+
         </CardContent>
       </Card>
 
