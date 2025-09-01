@@ -12,7 +12,7 @@ export default function Journey() {
 
   // Fallback journey data for production issues
   const fallbackJourney = {
-    currentLocation: "Satara, Maharashtra",
+    currentLocation: "Kochi, Kerala",
     journeyProgress: 65
   };
 

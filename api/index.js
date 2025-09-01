@@ -711,7 +711,7 @@ app.get("/api/journey", async (req, res) => {
         currentLocation: "Satara, Maharashtra",
         currentCoordinates: { lat: 17.6805, lng: 74.0183 },
         journeyProgress: 65,
-        daysTraveled: 78,
+        daysTraveled: 10,
         statesCovered: 12,
         distanceCovered: 3450,
         lastUpdated: new Date()
@@ -728,6 +728,9 @@ app.get("/api/journey", async (req, res) => {
         tracking.currentCoordinates = { lat: 12.2958, lng: 76.6394 };
       }
     }
+    
+    // Override daysTraveled to 10 as requested by user
+    tracking.daysTraveled = 10;
     
     console.log("Journey data retrieved successfully:", tracking.id);
     res.json(tracking);

@@ -16,6 +16,7 @@ import TravelPinsManager from "@/components/admin/travel-pins-manager";
 import GalleryManager from "@/components/admin/gallery-manager";
 import MessageManager from "@/components/admin/message-manager";
 import HomeContentManager from "@/components/admin/home-content-manager";
+import JourneyTrackingManager from "@/components/admin/journey-tracking-manager";
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -195,12 +196,13 @@ export default function Admin() {
 
         {/* Admin Tabs */}
         <Tabs defaultValue="dashboard" className="mt-8" data-testid="admin-tabs">
-          <TabsList className="grid w-full grid-cols-7">
+          <TabsList className="grid w-full grid-cols-8">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="home-content">Home Page</TabsTrigger>
             <TabsTrigger value="posts">Blog Posts</TabsTrigger>
             <TabsTrigger value="destinations">Places</TabsTrigger>
             <TabsTrigger value="travel-pins">Journey Map</TabsTrigger>
+            <TabsTrigger value="journey-tracking">Journey Stats</TabsTrigger>
             <TabsTrigger value="gallery">Gallery</TabsTrigger>
             <TabsTrigger value="messages">Messages</TabsTrigger>
           </TabsList>
@@ -291,6 +293,10 @@ export default function Admin() {
 
           <TabsContent value="travel-pins" className="mt-6">
             <TravelPinsManager />
+          </TabsContent>
+
+          <TabsContent value="journey-tracking" className="mt-6">
+            <JourneyTrackingManager />
           </TabsContent>
 
           <TabsContent value="gallery" className="mt-6">

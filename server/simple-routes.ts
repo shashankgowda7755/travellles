@@ -159,7 +159,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/journey", async (req, res) => {
     try {
       const [journey] = await db.select().from(journeyTable);
-      res.json(journey || {});
+      const result = journey || {};
+      
+      // Override all journey values as requested by user
+      if (result) {
+        result.daysTraveled = 45;           // Updated to 45 days
+        result.statesCovered = 12;          // Updated to 12 states
+        result.distanceCovered = 5500;      // Updated to 5500 kilometers
+        result.currentLocation = "Kochi, Kerala";  // Updated current location
+        result.journeyProgress = 75;        // Updated to 75% progress
+        result.currentCoordinates = "9.9312, 76.2673"; // Kochi coordinates
+      }
+      
+      res.json(result);
     } catch (error) {
       res.json({});
     }

@@ -142,7 +142,7 @@ export default function About() {
                     <Route className="text-brand-orange mr-4 h-5 w-5" />
                     <div>
                       <div className="font-medium">Current Location</div>
-                      <div>{journey?.currentLocation || "Satara, Maharashtra, India"}</div>
+                      <div>{journey?.currentLocation || "Kochi, Kerala, India"}</div>
                     </div>
                   </div>
                   <div className="flex items-center text-gray-600">
@@ -162,7 +162,7 @@ export default function About() {
                 <h3 className="font-playfair text-xl font-bold text-brand-brown mb-4">Journey Update</h3>
                 <div className="flex items-center mb-3">
                   <div className="w-3 h-3 bg-brand-orange rounded-full animate-pulse mr-3"></div>
-                  <span className="font-medium text-brand-brown">Currently in {journey?.currentLocation || "Satara, Maharashtra"}</span>
+                  <span className="font-medium text-brand-brown">Currently in {journey?.currentLocation || "Kochi, Kerala"}</span>
                 </div>
                 <p className="text-gray-600 text-sm mb-4">
                   Exploring the royal heritage and palace architecture. Next stop: Coimbatore for textile culture exploration.

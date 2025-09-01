@@ -127,19 +127,19 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto" data-testid="journey-stats">
             <div className="text-center">
               <div className="text-3xl lg:text-4xl font-bold text-brand-orange font-playfair" data-testid="stat-days">
-                {journey?.daysTraveled || 78}
+                {journey?.daysTraveled || 453}
               </div>
               <div className="text-sm lg:text-base text-gray-200">Days Journey</div>
             </div>
             <div className="text-center">
               <div className="text-3xl lg:text-4xl font-bold text-brand-orange font-playfair" data-testid="stat-states">
-                {journey?.statesCovered || 9}+
+                {journey?.statesCovered || 126}+
               </div>
               <div className="text-sm lg:text-base text-gray-200">States Visited</div>
             </div>
             <div className="text-center">
               <div className="text-3xl lg:text-4xl font-bold text-brand-orange font-playfair" data-testid="stat-distance">
-                {journey?.distanceCovered || 1950}+
+                {journey?.distanceCovered || 5500}+
               </div>
               <div className="text-sm lg:text-base text-gray-200">Kilometers</div>
             </div>
@@ -173,7 +173,7 @@ export default function Home() {
                 <div className="flex items-center space-x-3 mb-2">
                   <div className="w-4 h-4 bg-brand-orange rounded-full animate-pulse"></div>
                   <span className="font-semibold text-brand-brown" data-testid="current-location">
-                    Currently in: {journey?.currentLocation || "Satara, Maharashtra"}
+                    Currently in: {journey?.currentLocation || "Kochi, Kerala"}
                   </span>
                 </div>
                 <p className="text-gray-600">Exploring the royal heritage and palace architecture</p>
@@ -225,7 +225,7 @@ export default function Home() {
               <CardContent className="p-0">
                 <MapPin className="mx-auto text-brand-orange text-3xl mb-4" />
                 <h3 className="font-playfair text-xl font-bold text-brand-brown mb-2">Current Location</h3>
-                <p className="text-gray-600">{journey?.currentLocation || "Satara, Maharashtra"}</p>
+                <p className="text-gray-600">{journey?.currentLocation || "Kochi, Kerala"}</p>
                 <p className="text-sm text-gray-500 mt-2">Hill station charm and scenic beauty</p>
               </CardContent>
             </Card>
