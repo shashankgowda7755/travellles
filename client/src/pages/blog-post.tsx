@@ -133,7 +133,7 @@ export default function BlogPost() {
             <div className="flex items-center gap-2 mb-6" data-testid="blog-post-tags">
               <Tag className="h-4 w-4 text-gray-500" />
               <div className="flex flex-wrap gap-2">
-                {post.tags.map((tag, index) => (
+                {(post.tags || []).map((tag, index) => (
                   <Badge key={index} variant="outline" className="text-xs">
                     {tag}
                   </Badge>

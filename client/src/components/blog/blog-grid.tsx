@@ -40,7 +40,7 @@ export default function BlogGrid() {
     const matchesSearch = searchTerm === "" || 
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+      (post.tags || []).some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
     
     return matchesSearch;
   });

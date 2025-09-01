@@ -367,7 +367,7 @@ export default function BlogPostManager() {
                     </span>
                     <span>{post.readingTime} min read</span>
                     <div className="flex gap-1">
-                      {post.tags.map((tag, index) => (
+                      {(post.tags || []).map((tag, index) => (
                         <Badge key={index} variant="outline" className="text-xs">
                           {tag}
                         </Badge>
