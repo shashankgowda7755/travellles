@@ -19,8 +19,8 @@ import HomeContentManager from "@/components/admin/home-content-manager";
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("admins");
+  const [password, setPassword] = useState("Travel@2025");
   const { toast } = useToast();
   const queryClient = useQueryClient();
 

@@ -49,6 +49,17 @@ export default function HomeContentManager() {
       journeyStartDescription: "Dal Lake houseboats and mountain serenity",
       finalDestination: "Kanyakumari, Tamil Nadu",
       finalDestinationDescription: "Land's end where three seas meet",
+      footerBrandDescription: "Sharing personal journey experiences, life adventures, and authentic stories from solo travels and personal growth.",
+      footerInstagramUrl: "#",
+      footerYoutubeUrl: "#",
+      footerTwitterUrl: "#",
+      footerEmailUrl: "mailto:contact@milesalone.com",
+      footerCopyright: "© 2025 Milesalone. All rights reserved. Built with passion for authentic travel.",
+      footerDaysTraveled: "78 / 120",
+      footerStatesCovered: "9 / 15+",
+      footerDistance: "1,950 km",
+      footerProgressPercentage: 65,
+      footerProgressText: "65% journey complete",
     },
   });
 
@@ -444,42 +455,42 @@ export default function HomeContentManager() {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="instagramUrl">Instagram URL</Label>
+                    <Label htmlFor="footerInstagramUrl">Instagram URL</Label>
                     <Input
-                      id="instagramUrl"
-                      {...form.register("instagramUrl")}
+                      id="footerInstagramUrl"
+                      {...form.register("footerInstagramUrl")}
                       placeholder="https://instagram.com/yourusername"
-                      data-testid="input-instagram-url"
+                      data-testid="input-footer-instagram-url"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="twitterUrl">Twitter URL</Label>
+                    <Label htmlFor="footerTwitterUrl">Twitter URL</Label>
                     <Input
-                      id="twitterUrl"
-                      {...form.register("twitterUrl")}
+                      id="footerTwitterUrl"
+                      {...form.register("footerTwitterUrl")}
                       placeholder="https://twitter.com/yourusername"
-                      data-testid="input-twitter-url"
+                      data-testid="input-footer-twitter-url"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="facebookUrl">Facebook URL</Label>
+                    <Label htmlFor="footerYoutubeUrl">YouTube URL</Label>
                     <Input
-                      id="facebookUrl"
-                      {...form.register("facebookUrl")}
-                      placeholder="https://facebook.com/yourpage"
-                      data-testid="input-facebook-url"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="youtubeUrl">YouTube URL</Label>
-                    <Input
-                      id="youtubeUrl"
-                      {...form.register("youtubeUrl")}
+                      id="footerYoutubeUrl"
+                      {...form.register("footerYoutubeUrl")}
                       placeholder="https://youtube.com/yourchannel"
-                      data-testid="input-youtube-url"
+                      data-testid="input-footer-youtube-url"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="footerEmailUrl">Email URL</Label>
+                    <Input
+                      id="footerEmailUrl"
+                      {...form.register("footerEmailUrl")}
+                      placeholder="mailto:contact@example.com"
+                      data-testid="input-footer-email-url"
                     />
                   </div>
                 </div>
@@ -491,26 +502,14 @@ export default function HomeContentManager() {
                 <CardTitle>Copyright Information</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="copyrightYear">Copyright Year</Label>
-                    <Input
-                      id="copyrightYear"
-                      {...form.register("copyrightYear")}
-                      placeholder="2024"
-                      data-testid="input-copyright-year"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="copyrightOwner">Copyright Owner</Label>
-                    <Input
-                      id="copyrightOwner"
-                      {...form.register("copyrightOwner")}
-                      placeholder="Your Name or Company"
-                      data-testid="input-copyright-owner"
-                    />
-                  </div>
+                <div className="space-y-2">
+                  <Label htmlFor="footerCopyright">Copyright Text</Label>
+                  <Input
+                    id="footerCopyright"
+                    {...form.register("footerCopyright")}
+                    placeholder="© 2025 Your Name. All rights reserved."
+                    data-testid="input-footer-copyright"
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -520,37 +519,55 @@ export default function HomeContentManager() {
                 <CardTitle>Journey Progress Statistics</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="journeyCountriesVisited">Countries Visited</Label>
+                    <Label htmlFor="footerDaysTraveled">Days Traveled</Label>
                     <Input
-                      id="journeyCountriesVisited"
-                      type="number"
-                      {...form.register("journeyCountriesVisited", { valueAsNumber: true })}
-                      placeholder="15"
-                      data-testid="input-countries-visited"
+                      id="footerDaysTraveled"
+                      {...form.register("footerDaysTraveled")}
+                      placeholder="78 / 120"
+                      data-testid="input-footer-days-traveled"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="journeyCitiesExplored">Cities Explored</Label>
+                    <Label htmlFor="footerStatesCovered">States Covered</Label>
                     <Input
-                      id="journeyCitiesExplored"
-                      type="number"
-                      {...form.register("journeyCitiesExplored", { valueAsNumber: true })}
-                      placeholder="50"
-                      data-testid="input-cities-explored"
+                      id="footerStatesCovered"
+                      {...form.register("footerStatesCovered")}
+                      placeholder="9 / 15+"
+                      data-testid="input-footer-states-covered"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="journeyMilesWalked">Miles Walked</Label>
+                    <Label htmlFor="footerDistance">Distance Covered</Label>
                     <Input
-                      id="journeyMilesWalked"
+                      id="footerDistance"
+                      {...form.register("footerDistance")}
+                      placeholder="1,950 km"
+                      data-testid="input-footer-distance"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="footerProgressPercentage">Progress Percentage</Label>
+                    <Input
+                      id="footerProgressPercentage"
                       type="number"
-                      {...form.register("journeyMilesWalked", { valueAsNumber: true })}
-                      placeholder="1000"
-                      data-testid="input-miles-walked"
+                      {...form.register("footerProgressPercentage", { valueAsNumber: true })}
+                      placeholder="65"
+                      data-testid="input-footer-progress-percentage"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="footerProgressText">Progress Text</Label>
+                    <Input
+                      id="footerProgressText"
+                      {...form.register("footerProgressText")}
+                      placeholder="65% journey complete"
+                      data-testid="input-footer-progress-text"
                     />
                   </div>
                 </div>
