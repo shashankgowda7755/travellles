@@ -1,6 +1,7 @@
 <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="180" height="180" rx="20" fill="#E07A3E"/>
-  <path d="M45 90L90 45L135 90L90 135L45 90Z" fill="white"/>
-  <circle cx="90" cy="90" r="15" fill="#E07A3E"/>
-  <text x="90" y="150" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="18" font-weight="600">M</text>
+  <rect width="180" height="180" rx="40" fill="#F97316"/>
+  <path d="M45 90L90 45L135 90L90 135L45 90Z" fill="white" opacity="0.2"/>
+  <circle cx="90" cy="90" r="30" fill="white"/>
+  <text x="90" y="84" text-anchor="middle" fill="#F97316" font-family="serif" font-size="13" font-weight="bold">Miles</text>
+  <text x="90" y="102" text-anchor="middle" fill="#F97316" font-family="serif" font-size="13" font-weight="bold">Alone</text>
 </svg>

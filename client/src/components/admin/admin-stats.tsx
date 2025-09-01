@@ -5,9 +5,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { AdminStats } from "@/types";
 
 export default function AdminStats() {
-  const { data: stats, isLoading } = useQuery<AdminStats>({
+  const { data: stats, isLoading, error } = useQuery<AdminStats>({
     queryKey: ["/api/admin/stats"],
+    retry: 3,
+    retryDelay: 1000,
   });
+
+  // Debug logging
+  console.log('AdminStats - isLoading:', isLoading, 'error:', error, 'data:', stats);
 
   if (isLoading) {
     return (
@@ -25,6 +30,21 @@ export default function AdminStats() {
             </CardContent>
           </Card>
         ))}
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="grid grid-cols-1 gap-6 mb-8" data-testid="admin-stats-error">
+        <Card className="p-6 border-red-200 bg-red-50">
+          <CardContent className="p-0">
+            <div className="text-red-600">
+              <p className="font-medium">Error loading statistics</p>
+              <p className="text-sm mt-1">{error instanceof Error ? error.message : 'Unknown error'}</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
@@ -54,10 +74,16 @@ export default function AdminStats() {
       icon: Users,
       color: "text-purple-500",
     },
+    {
+      title: "Messages",
+      value: stats?.unreadMessages || 0,
+      icon: Mail,
+      color: "text-red-500",
+    },
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" data-testid="admin-stats">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8" data-testid="admin-stats">
       {statCards.map((stat, index) => {
         const Icon = stat.icon;
         return (

@@ -97,7 +97,7 @@ export default function Home() {
             )}
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-100 max-w-2xl mx-auto" data-testid="hero-subtitle">
-            {homeContent?.heroSubtitle || "Join Shashank's authentic 4-month journey across India, from Kashmir's valleys to Kanyakumari's shores, on just ₹500 per day"}
+            {homeContent?.heroSubtitle || "Join Shashank's authentic 4-month journey across India, from Kashmir's valleys to Kanyakumari's shores"}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/journey">
@@ -124,7 +124,7 @@ export default function Home() {
           </div>
           
           {/* Journey Stats */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16 max-w-3xl mx-auto" data-testid="journey-stats">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto" data-testid="journey-stats">
             <div className="text-center">
               <div className="text-3xl lg:text-4xl font-bold text-brand-orange font-playfair" data-testid="stat-days">
                 {journey?.daysTraveled || 78}
@@ -142,12 +142,6 @@ export default function Home() {
                 {journey?.distanceCovered || 1950}+
               </div>
               <div className="text-sm lg:text-base text-gray-200">Kilometers</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl lg:text-4xl font-bold text-brand-orange font-playfair" data-testid="stat-budget">
-                {homeContent?.dailyBudget || "₹500"}
-              </div>
-              <div className="text-sm lg:text-base text-gray-200">Per Day Budget</div>
             </div>
           </div>
         </div>
@@ -179,7 +173,7 @@ export default function Home() {
                 <div className="flex items-center space-x-3 mb-2">
                   <div className="w-4 h-4 bg-brand-orange rounded-full animate-pulse"></div>
                   <span className="font-semibold text-brand-brown" data-testid="current-location">
-                    Currently in: {journey?.currentLocation || "Mysuru, Karnataka"}
+                    Currently in: {journey?.currentLocation || "Satara, Maharashtra"}
                   </span>
                 </div>
                 <p className="text-gray-600">Exploring the royal heritage and palace architecture</p>
@@ -222,8 +216,8 @@ export default function Home() {
               <CardContent className="p-0">
                 <Calendar className="mx-auto text-brand-green text-3xl mb-4" />
                 <h3 className="font-playfair text-xl font-bold text-brand-brown mb-2">Journey Started</h3>
-                <p className="text-gray-600">{homeContent?.journeyStartDate || "August 1, 2025"} - {homeContent?.journeyStartLocation || "Srinagar, Kashmir"}</p>
-                <p className="text-sm text-gray-500 mt-2">{homeContent?.journeyStartDescription || "Dal Lake houseboats and mountain serenity"}</p>
+                <p className="text-gray-600">{homeContent?.journeyStartDate || "August 22nd"} - {homeContent?.journeyStartLocation || "Bangalore, Karnataka"}</p>
+                <p className="text-sm text-gray-500 mt-2">{homeContent?.journeyStartDescription || "Tech city beginnings and urban adventures"}</p>
               </CardContent>
             </Card>
             
@@ -231,8 +225,8 @@ export default function Home() {
               <CardContent className="p-0">
                 <MapPin className="mx-auto text-brand-orange text-3xl mb-4" />
                 <h3 className="font-playfair text-xl font-bold text-brand-brown mb-2">Current Location</h3>
-                <p className="text-gray-600">{journey?.currentLocation || "Mysuru, Karnataka"}</p>
-                <p className="text-sm text-gray-500 mt-2">Palace architecture and royal heritage</p>
+                <p className="text-gray-600">{journey?.currentLocation || "Satara, Maharashtra"}</p>
+                <p className="text-sm text-gray-500 mt-2">Hill station charm and scenic beauty</p>
               </CardContent>
             </Card>
             
@@ -240,23 +234,23 @@ export default function Home() {
               <CardContent className="p-0">
                 <Route className="mx-auto text-brand-brown text-3xl mb-4" />
                 <h3 className="font-playfair text-xl font-bold text-brand-brown mb-2">Final Destination</h3>
-                <p className="text-gray-600">{homeContent?.finalDestination || "Kanyakumari, Tamil Nadu"}</p>
-                <p className="text-sm text-gray-500 mt-2">{homeContent?.finalDestinationDescription || "Land's end where three seas meet"}</p>
+                <p className="text-gray-600">{homeContent?.finalDestination || "Kashmir"}</p>
+                <p className="text-sm text-gray-500 mt-2">{homeContent?.finalDestinationDescription || "Paradise on earth with snow-capped peaks"}</p>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* Latest Travel Stories */}
+      {/* Latest Life Stories */}
       <section className="py-16 lg:py-24 bg-brand-cream" data-testid="featured-posts-section">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="font-playfair text-3xl lg:text-5xl font-bold text-brand-brown mb-6" data-testid="featured-posts-title">
-              {homeContent?.storiesSectionTitle || "Latest Travel Stories"}
+              {homeContent?.storiesSectionTitle || "Latest Life Stories"}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto" data-testid="featured-posts-description">
-              {homeContent?.storiesSectionDescription || "Authentic stories from the road - the struggles, discoveries, and unexpected connections that make solo travel transformative."}
+              {homeContent?.storiesSectionDescription || "Authentic stories from the journey - the struggles, discoveries, and unexpected connections that make personal growth transformative."}
             </p>
           </div>
 
@@ -286,15 +280,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Travel Guides Section */}
+      {/* Journey Guides Section */}
       <section className="py-16 lg:py-24 bg-white" data-testid="guides-section">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="font-playfair text-3xl lg:text-5xl font-bold text-brand-brown mb-6" data-testid="guides-title">
-              {homeContent?.guidesSectionTitle || "Travel Guides"}
+              {homeContent?.guidesSectionTitle || "Journey Guides"}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto" data-testid="guides-description">
-              {homeContent?.guidesSectionDescription || "Comprehensive guides to the most incredible destinations on this journey. From planning to experiencing, get insider tips for authentic travel."}
+              {homeContent?.guidesSectionDescription || "Comprehensive guides to the most incredible places on this journey. From planning to experiencing, get insider tips for authentic exploration."}
             </p>
           </div>
 

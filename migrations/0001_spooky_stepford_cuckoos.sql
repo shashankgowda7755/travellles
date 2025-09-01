@@ -1,0 +1,2 @@
+ALTER TABLE "home_page_content" ALTER COLUMN "hero_subtitle" SET DEFAULT 'Join Shashank''s authentic 4-month journey across India, from Kashmir''s valleys to Kanyakumari''s shores';--> statement-breakpoint
+ALTER TABLE "home_page_content" DROP COLUMN "daily_budget";

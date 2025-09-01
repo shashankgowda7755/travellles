@@ -44,7 +44,7 @@ export default function Gallery() {
               Visual Journey
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Every photograph tells a story of discovery, challenge, and the incredible diversity of landscapes, cultures, and moments that define authentic India travel. These collections capture the essence of each destination and the emotions of the journey.
+              Every photograph tells a story of discovery, challenge, and the incredible diversity of landscapes, cultures, and moments that define authentic personal exploration. These collections capture the essence of each place and the emotions of the journey.
             </p>
             
             {/* Search Bar */}

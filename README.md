@@ -1,37 +1,53 @@
-# 🚀 Miles Alone - Personal Journey Platform
+# 🌟 Miles Alone - Personal Journey Platform
 
-A comprehensive personal journey platform for documenting life experiences, adventures, and personal growth. Built with React, TypeScript, Express, and PostgreSQL.
+A modern, full-stack personal journey platform built for sharing authentic life experiences, meaningful places, and personal stories. Perfect for documenting personal growth, solo adventures, and life's meaningful moments.
 
 ## ✨ Features
 
-- 🔐 **Secure Admin Panel** - Full content management system
-- 📝 **Story System** - Create and manage personal experiences and life stories
-- 📸 **Gallery Management** - Photo collections with multimedia integration
-- 🗺️ **Interactive Journey Map** - Real-time life journey tracking
-- 📧 **Newsletter System** - Email subscription management
-- 📱 **Mobile Responsive** - Optimized for all devices
-- ⚡ **Performance Optimized** - Fast loading and SEO ready
+### 🗺️ Interactive Journey Map
+- Personal location tracking
+- Custom place pins with categories
+- Journey progress visualization
+- Interactive place exploration
+
+### 📝 Rich Content Management
+- Personal blog posts with rich text editor
+- Photo galleries with collections
+- Place guides and experiences
+- Social media integration
+
+### 🎯 Admin Dashboard
+- Complete content management system
+- Analytics and visitor insights
+- SEO optimization tools
+- Newsletter management
 
 ## 🚀 Quick Start
 
-### 1. Database Setup
-Choose your database provider:
-- **Neon** (Recommended): [Setup Guide](DATABASE_SETUP.md)
-- **Supabase**: [Setup Guide](DATABASE_SETUP.md)
+### Prerequisites
+- Node.js 18+
+- PostgreSQL database (Neon/Supabase)
+- Git
 
-### 2. Environment Configuration
+### Installation
 ```bash
-# Copy environment template
+# Clone the repository
+git clone https://github.com/yourusername/miles-alone.git
+cd miles-alone
+
+# Install dependencies
+npm install
+
+# Set up environment variables
 cp .env.example .env
+# Edit .env with your database credentials
 
-# Edit .env with your database URL and credentials
+# Deploy database schema
+npm run db:push
+
+# Start development server
+npm run dev
 ```
-
-### 3. Deploy to Vercel
-1. **Push to GitHub**: Upload your project to GitHub
-2. **Connect to Vercel**: Import your GitHub repo in Vercel
-3. **Add Environment Variables**: Set DATABASE_URL, SESSION_SECRET, and ADMIN_PASSWORD
-4. **Deploy**: Click deploy - it should work immediately!
 
 ## 📋 Environment Variables
 
@@ -75,7 +91,7 @@ cp .env.example .env
 After deployment:
 1. Go to `/admin` on your site
 2. Login with username: `admins` and your `ADMIN_PASSWORD`
-3. Start adding your travel content!
+3. Start adding your personal journey content!
 
 ## 📁 Project Structure
 

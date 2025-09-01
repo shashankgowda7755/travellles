@@ -12,7 +12,7 @@ export default function Journey() {
 
   // Fallback journey data for production issues
   const fallbackJourney = {
-    currentLocation: "Mysuru, Karnataka",
+    currentLocation: "Satara, Maharashtra",
     journeyProgress: 65
   };
 
@@ -88,7 +88,7 @@ export default function Journey() {
             Explore My Journey
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover incredible moments and experiences through my personal journey. Each story tells a unique tale of growth, adventure, and self-discovery.
+            Discover incredible moments and experiences through my personal journey. Each story tells a unique tale of growth, exploration, and self-discovery.
           </p>
         </div>
 
@@ -138,18 +138,18 @@ export default function Journey() {
           </div>
         </div>
 
-        {/* Destinations Section */}
-        <div data-testid="destinations-section">
+        {/* Places Section */}
+        <div data-testid="places-section">
           <div className="text-center mb-12">
             <h2 className="font-playfair text-2xl lg:text-4xl font-bold text-brand-brown mb-4">
               View All Photo Collections
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Each destination offers its own unique character, challenges, and rewards. Filter by category, region, or search for specific places.
+              Each place offers its own unique character, challenges, and rewards. Filter by category, region, or search for specific locations.
             </p>
           </div>
 
-          <ErrorBoundary componentName="Destination Grid">
+          <ErrorBoundary componentName="Places Grid">
             <DestinationGrid />
           </ErrorBoundary>
         </div>

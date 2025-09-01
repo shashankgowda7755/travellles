@@ -4,7 +4,14 @@
   "description": "Miles Alone - A personal journey through life's adventures and experiences",
   "type": "module",
   "license": "MIT",
-  "keywords": ["miles-alone", "personal-journey", "blog", "experiences", "solo-travel", "life-stories"],
+  "keywords": [
+    "miles-alone",
+    "personal-journey",
+    "blog",
+    "experiences",
+    "solo-travel",
+    "life-stories"
+  ],
   "author": "Miles Alone",
   "homepage": "https://milesalone.com",
   "scripts": {
@@ -50,6 +57,7 @@
     "@types/leaflet": "^1.9.20",
     "@types/memoizee": "^0.4.12",
     "@types/pg": "^8.15.5",
+    "@vercel/speed-insights": "^1.2.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",

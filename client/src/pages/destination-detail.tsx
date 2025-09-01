@@ -56,10 +56,10 @@ export default function DestinationDetail() {
         <Card className="max-w-md text-center">
           <CardContent className="p-8">
             <h2 className="font-playfair text-2xl font-bold text-brand-brown mb-4">
-              Destination Not Found
+              Place Not Found
             </h2>
             <p className="text-gray-600 mb-6">
-              The destination you're looking for doesn't exist or has been moved.
+              The place you're looking for doesn't exist or has been moved.
             </p>
             <Link href="/journey">
               <Button className="bg-brand-orange text-white hover:bg-brand-orange/90">
@@ -81,7 +81,7 @@ export default function DestinationDetail() {
 
   const categoryColors = {
     "Trek Place": "bg-green-100 text-green-800",
-    "Tourist Spot": "bg-blue-100 text-blue-800",
+    "Exploration Spot": "bg-blue-100 text-blue-800",
     "Beach": "bg-cyan-100 text-cyan-800",
     "Historical": "bg-amber-100 text-amber-800",
     "Cultural": "bg-purple-100 text-purple-800",

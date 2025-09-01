@@ -5,7 +5,7 @@ import rateLimit from 'express-rate-limit';
 import pkg from 'pg';
 const { Pool } = pkg;
 import { drizzle } from 'drizzle-orm/node-postgres';
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, sql } from "drizzle-orm";
 import connectPgSimple from 'connect-pg-simple';
 import {
   users,
@@ -708,8 +708,8 @@ app.get("/api/journey", async (req, res) => {
       // Return default data if no journey tracking data exists
       return res.json({
         id: "default",
-        currentLocation: "Mysuru, Karnataka",
-        currentCoordinates: { lat: 12.2958, lng: 76.6394 },
+        currentLocation: "Satara, Maharashtra",
+        currentCoordinates: { lat: 17.6805, lng: 74.0183 },
         journeyProgress: 65,
         daysTraveled: 78,
         statesCovered: 12,
@@ -889,24 +889,29 @@ app.put("/api/journey", requireAuth, async (req, res) => {
 app.get("/api/admin/stats", requireAuth, async (req, res) => {
   try {
     await initializeDatabase();
-    const posts = await db.select().from(blogPosts);
-    const dests = await db.select().from(destinations);
-    const galleries = await db.select().from(galleryCollections);
-    const pins = await db.select().from(travelPins);
+    
+    const postsCount = await db.select({ count: sql`count(*)` }).from(blogPosts);
+    const destinationsCount = await db.select({ count: sql`count(*)` }).from(destinations);
+    const galleryCount = await db.select({ count: sql`count(*)` }).from(galleryCollections);
+    const subscribersCount = await db.select({ count: sql`count(*)` }).from(newsletterSubscribers);
+    const messagesCount = await db.select({ count: sql`count(*)` }).from(contactMessages);
     
     res.json({
-      totalPosts: posts.length,
-      totalDestinations: dests.length,
-      totalGalleries: galleries.length,
-      totalPins: pins.length
+      totalPosts: Number(postsCount[0]?.count) || 0,
+      totalDestinations: Number(destinationsCount[0]?.count) || 0,
+      totalGalleryItems: Number(galleryCount[0]?.count) || 0,
+      totalSubscribers: Number(subscribersCount[0]?.count) || 0,
+      unreadMessages: Number(messagesCount[0]?.count) || 0,
     });
   } catch (error) {
     console.error("Error fetching admin stats:", error);
-    res.json({
+    res.status(500).json({ 
       totalPosts: 0,
       totalDestinations: 0,
-      totalGalleries: 0,
-      totalPins: 0
+      totalGalleryItems: 0,
+      totalSubscribers: 0,
+      unreadMessages: 0,
+      message: "Failed to fetch admin stats" 
     });
   }
 });
@@ -957,27 +962,7 @@ app.post("/api/auth/logout", (req, res) => {
   }
 });
 
-// Admin Stats
-app.get("/api/admin/stats", async (req, res) => {
-  try {
-    await initializeDatabase();
-    
-    const postsCount = await db.select({ count: sql`count(*)` }).from(blogPosts);
-    const destinationsCount = await db.select({ count: sql`count(*)` }).from(destinations);
-    const galleryCount = await db.select({ count: sql`count(*)` }).from(galleryCollections);
-    const pinsCount = await db.select({ count: sql`count(*)` }).from(travelPins);
-    
-    res.json({
-      totalPosts: Number(postsCount[0]?.count) || 0,
-      totalDestinations: Number(destinationsCount[0]?.count) || 0,
-      totalGalleryCollections: Number(galleryCount[0]?.count) || 0,
-      totalTravelPins: Number(pinsCount[0]?.count) || 0,
-    });
-  } catch (error) {
-    console.error("Error fetching admin stats:", error);
-    res.status(500).json({ message: "Failed to fetch admin stats" });
-  }
-});
+
 
 // Newsletter subscription
 app.post("/api/newsletter/subscribe", async (req, res) => {

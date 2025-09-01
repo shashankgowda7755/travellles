@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,11 +27,10 @@ export default function HomeContentManager() {
     resolver: zodResolver(insertHomePageContentSchema),
     defaultValues: homeContent || {
       heroTitle: "Raw Roads,\nReal Discovery",
-      heroSubtitle: "Join Shashank's authentic 4-month journey across India, from Kashmir's valleys to Kanyakumari's shores, on just ₹500 per day",
+      heroSubtitle: "Join Shashank's authentic 4-month journey across India, from Kashmir's valleys to Kanyakumari's shores",
       heroBackgroundImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
       exploreButtonText: "Explore Journey",
       diariesButtonText: "Read Diaries",
-      dailyBudget: "₹500",
       mapSectionTitle: "Live Journey Tracker",
       mapSectionDescription: "Follow the real-time progress from the serene valleys of Kashmir to the southern tip of Kanyakumari. Each pin tells a story of discovery, challenge, and authentic Indian experiences.",
       storiesSectionTitle: "Latest Travel Stories",
@@ -54,7 +53,7 @@ export default function HomeContentManager() {
   });
 
   // Update form values when data loads
-  useState(() => {
+  useEffect(() => {
     if (homeContent) {
       Object.keys(homeContent).forEach((key) => {
         if (key !== 'id' && key !== 'createdAt' && key !== 'updatedAt') {
@@ -62,7 +61,7 @@ export default function HomeContentManager() {
         }
       });
     }
-  });
+  }, [homeContent, form]);
 
   const updateMutation = useMutation({
     mutationFn: (data: Partial<InsertHomePageContent>) =>
@@ -116,12 +115,13 @@ export default function HomeContentManager() {
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <Tabs defaultValue="hero" className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="hero">Hero Section</TabsTrigger>
             <TabsTrigger value="sections">Section Titles</TabsTrigger>
             <TabsTrigger value="newsletter">Newsletter</TabsTrigger>
             <TabsTrigger value="journey">Journey Info</TabsTrigger>
             <TabsTrigger value="stats">Stats</TabsTrigger>
+            <TabsTrigger value="footer">Footer</TabsTrigger>
           </TabsList>
 
           <TabsContent value="hero" className="space-y-6">
@@ -186,15 +186,7 @@ export default function HomeContentManager() {
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="dailyBudget">Daily Budget Text</Label>
-                    <Input
-                      id="dailyBudget"
-                      {...form.register("dailyBudget")}
-                      placeholder="₹500"
-                      data-testid="input-daily-budget"
-                    />
-                  </div>
+
                 </div>
               </CardContent>
             </Card>
@@ -419,6 +411,146 @@ export default function HomeContentManager() {
                       type="number"
                       {...form.register("readRate", { valueAsNumber: true })}
                       data-testid="input-read-rate"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="footer" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Footer Brand Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="footerBrandDescription">Brand Description</Label>
+                  <Textarea
+                    id="footerBrandDescription"
+                    {...form.register("footerBrandDescription")}
+                    rows={3}
+                    placeholder="Brief description of your travel brand"
+                    data-testid="input-footer-brand-description"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Social Media Links</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="instagramUrl">Instagram URL</Label>
+                    <Input
+                      id="instagramUrl"
+                      {...form.register("instagramUrl")}
+                      placeholder="https://instagram.com/yourusername"
+                      data-testid="input-instagram-url"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="twitterUrl">Twitter URL</Label>
+                    <Input
+                      id="twitterUrl"
+                      {...form.register("twitterUrl")}
+                      placeholder="https://twitter.com/yourusername"
+                      data-testid="input-twitter-url"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="facebookUrl">Facebook URL</Label>
+                    <Input
+                      id="facebookUrl"
+                      {...form.register("facebookUrl")}
+                      placeholder="https://facebook.com/yourpage"
+                      data-testid="input-facebook-url"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="youtubeUrl">YouTube URL</Label>
+                    <Input
+                      id="youtubeUrl"
+                      {...form.register("youtubeUrl")}
+                      placeholder="https://youtube.com/yourchannel"
+                      data-testid="input-youtube-url"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Copyright Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="copyrightYear">Copyright Year</Label>
+                    <Input
+                      id="copyrightYear"
+                      {...form.register("copyrightYear")}
+                      placeholder="2024"
+                      data-testid="input-copyright-year"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="copyrightOwner">Copyright Owner</Label>
+                    <Input
+                      id="copyrightOwner"
+                      {...form.register("copyrightOwner")}
+                      placeholder="Your Name or Company"
+                      data-testid="input-copyright-owner"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Journey Progress Statistics</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="journeyCountriesVisited">Countries Visited</Label>
+                    <Input
+                      id="journeyCountriesVisited"
+                      type="number"
+                      {...form.register("journeyCountriesVisited", { valueAsNumber: true })}
+                      placeholder="15"
+                      data-testid="input-countries-visited"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="journeyCitiesExplored">Cities Explored</Label>
+                    <Input
+                      id="journeyCitiesExplored"
+                      type="number"
+                      {...form.register("journeyCitiesExplored", { valueAsNumber: true })}
+                      placeholder="50"
+                      data-testid="input-cities-explored"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="journeyMilesWalked">Miles Walked</Label>
+                    <Input
+                      id="journeyMilesWalked"
+                      type="number"
+                      {...form.register("journeyMilesWalked", { valueAsNumber: true })}
+                      placeholder="1000"
+                      data-testid="input-miles-walked"
                     />
                   </div>
                 </div>

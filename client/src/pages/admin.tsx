@@ -199,8 +199,8 @@ export default function Admin() {
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="home-content">Home Page</TabsTrigger>
             <TabsTrigger value="posts">Blog Posts</TabsTrigger>
-            <TabsTrigger value="destinations">Destinations</TabsTrigger>
-            <TabsTrigger value="travel-pins">Travel Map</TabsTrigger>
+            <TabsTrigger value="destinations">Places</TabsTrigger>
+            <TabsTrigger value="travel-pins">Journey Map</TabsTrigger>
             <TabsTrigger value="gallery">Gallery</TabsTrigger>
             <TabsTrigger value="messages">Messages</TabsTrigger>
           </TabsList>
@@ -221,7 +221,7 @@ export default function Admin() {
                 }, 100);
               }}
               onAddDestination={() => {
-                // Switch to destinations tab and trigger create
+                // Switch to places tab and trigger create
                 const tabsTrigger = document.querySelector('[value="destinations"]') as HTMLElement;
                 tabsTrigger?.click();
                 setTimeout(() => {
@@ -235,7 +235,7 @@ export default function Admin() {
                 tabsTrigger?.click();
               }}
               onUpdateLocation={() => {
-                // Switch to destinations tab
+                // Switch to places tab
                 const tabsTrigger = document.querySelector('[value="destinations"]') as HTMLElement;
                 tabsTrigger?.click();
               }}
@@ -253,11 +253,11 @@ export default function Admin() {
                 }, 200);
               }}
               onEditDestination={(destination) => {
-                // Switch to destinations tab and trigger edit for specific destination
+                // Switch to places tab and trigger edit for specific place
                 const tabsTrigger = document.querySelector('[value="destinations"]') as HTMLElement;
                 tabsTrigger?.click();
                 setTimeout(() => {
-                  // Find and click edit button for this specific destination
+                  // Find and click edit button for this specific place
                   const editButtons = document.querySelectorAll('[data-testid^="edit-destination-"]');
                   const targetButton = Array.from(editButtons).find(btn => 
                     btn.getAttribute('data-testid')?.includes(destination.id)

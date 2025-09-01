@@ -150,7 +150,7 @@ export const travelPins = pgTable("travel_pins", {
   city: text("city"),
   visitedDate: timestamp("visited_date"),
   pinType: text("pin_type").$type<'visited' | 'current' | 'planned' | 'favorite'>().notNull().default('visited'),
-  pinColor: text("pin_color").notNull().default('#E07A3E'), // Brand orange as default
+  pinColor: text("pin_color").notNull().default('#F97316'), // Brand orange as default
   images: text("images").array().default([]),
   tags: text("tags").array().default([]),
   rating: integer("rating").default(0), // 1-5 stars
@@ -171,15 +171,14 @@ export const homePageContent = pgTable("home_page_content", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   // Hero section
   heroTitle: text("hero_title").notNull().default("Raw Roads,\nReal Discovery"),
-  heroSubtitle: text("hero_subtitle").notNull().default("Join Shashank's authentic 4-month journey across India, from Kashmir's valleys to Kanyakumari's shores, on just ₹500 per day"),
+  heroSubtitle: text("hero_subtitle").notNull().default("Join an authentic personal journey of discovery, growth, and meaningful experiences"),
   heroBackgroundImage: text("hero_background_image").notNull().default("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"),
   exploreButtonText: text("explore_button_text").notNull().default("Explore Journey"),
   diariesButtonText: text("diaries_button_text").notNull().default("Read Diaries"),
-  dailyBudget: text("daily_budget").notNull().default("₹500"),
   
   // Map section
   mapSectionTitle: text("map_section_title").notNull().default("Live Journey Tracker"),
-  mapSectionDescription: text("map_section_description").notNull().default("Follow the real-time progress from the serene valleys of Kashmir to the southern tip of Kanyakumari. Each pin tells a story of discovery, challenge, and authentic Indian experiences."),
+  mapSectionDescription: text("map_section_description").notNull().default("Follow the journey progress through meaningful places and experiences. Each pin tells a story of discovery, challenge, and personal growth."),
   
   // Featured posts section
   storiesSectionTitle: text("stories_section_title").notNull().default("Latest Travel Stories"),
@@ -191,7 +190,7 @@ export const homePageContent = pgTable("home_page_content", {
   
   // Gallery section
   gallerySectionTitle: text("gallery_section_title").notNull().default("Visual Journey"),
-  gallerySectionDescription: text("gallery_section_description").notNull().default("Every photograph tells a story of discovery, challenge, and the incredible diversity of landscapes, cultures, and moments that define authentic India travel."),
+  gallerySectionDescription: text("gallery_section_description").notNull().default("Every photograph tells a story of discovery, challenge, and the incredible diversity of experiences and moments that define authentic personal exploration."),
   
   // Newsletter section
   newsletterTitle: text("newsletter_title").notNull().default("Join the Journey"),
@@ -206,6 +205,21 @@ export const homePageContent = pgTable("home_page_content", {
   journeyStartDescription: text("journey_start_description").notNull().default("Dal Lake houseboats and mountain serenity"),
   finalDestination: text("final_destination").notNull().default("Kanyakumari, Tamil Nadu"),
   finalDestinationDescription: text("final_destination_description").notNull().default("Land's end where three seas meet"),
+  
+  // Footer section
+  footerBrandDescription: text("footer_brand_description").notNull().default("Sharing personal journey experiences, life adventures, and authentic stories from solo travels and personal growth."),
+  footerInstagramUrl: text("footer_instagram_url").notNull().default("#"),
+  footerYoutubeUrl: text("footer_youtube_url").notNull().default("#"),
+  footerTwitterUrl: text("footer_twitter_url").notNull().default("#"),
+  footerEmailUrl: text("footer_email_url").notNull().default("mailto:contact@milesalone.com"),
+  footerCopyright: text("footer_copyright").notNull().default("© 2025 Milesalone. All rights reserved. Built with passion for authentic travel."),
+  
+  // Footer journey progress stats
+  footerDaysTraveled: text("footer_days_traveled").notNull().default("78 / 120"),
+  footerStatesCovered: text("footer_states_covered").notNull().default("9 / 15+"),
+  footerDistance: text("footer_distance").notNull().default("1,950 km"),
+  footerProgressPercentage: integer("footer_progress_percentage").notNull().default(65),
+  footerProgressText: text("footer_progress_text").notNull().default("65% journey complete"),
   
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -228,20 +242,20 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
     }
     return val;
   }),
-});
+}).partial();
 
 export const insertDestinationSchema = createInsertSchema(destinations).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
-});
+}).partial();
 
 export const insertGalleryCollectionSchema = createInsertSchema(galleryCollections).omit({
   id: true,
   mediaCount: true,
   createdAt: true,
   updatedAt: true,
-});
+}).partial();
 
 export const insertGalleryMediaSchema = createInsertSchema(galleryMedia).omit({
   id: true,
@@ -269,13 +283,13 @@ export const insertTravelPinSchema = createInsertSchema(travelPins).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
-});
+}).partial();
 
 export const insertHomePageContentSchema = createInsertSchema(homePageContent).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
-});
+}).partial();
 
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;

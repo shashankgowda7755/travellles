@@ -46,11 +46,11 @@ export default function About() {
               I'm Shashank, and this is my attempt to document the real India - not the Instagram-perfect version, but the authentic, challenging, beautiful, and transformative experience of traveling across this incredible country on a shoestring budget.
             </p>
             <p className="text-gray-600 mb-8" data-testid="about-description">
-              Starting from the serene valleys of Kashmir and heading to the southern tip of Kanyakumari, this 4-month journey covers over 3,000 kilometers, 15+ states, and countless stories of human connection, cultural discovery, and personal growth. All on a budget of just ₹500 per day.
+              Starting from the serene valleys of Kashmir and heading to the southern tip of Kanyakumari, this 4-month journey covers over 3,000 kilometers, 15+ states, and countless stories of human connection, cultural discovery, and personal growth.
             </p>
 
             {/* Journey Details */}
-            <div className="grid grid-cols-2 gap-6 mb-8" data-testid="journey-details">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8" data-testid="journey-details">
               <Card className="bg-white p-4">
                 <CardContent className="p-0">
                   <div className="flex items-center mb-2">
@@ -74,16 +74,6 @@ export default function About() {
               <Card className="bg-white p-4">
                 <CardContent className="p-0">
                   <div className="flex items-center mb-2">
-                    <Coins className="text-brand-orange mr-3 h-5 w-5" />
-                    <span className="font-semibold text-brand-brown">Daily Budget</span>
-                  </div>
-                  <p className="text-gray-600">₹500 per day</p>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-white p-4">
-                <CardContent className="p-0">
-                  <div className="flex items-center mb-2">
                     <Backpack className="text-brand-orange mr-3 h-5 w-5" />
                     <span className="font-semibold text-brand-brown">Style</span>
                   </div>
@@ -92,12 +82,12 @@ export default function About() {
               </Card>
             </div>
 
-            {/* Travel Philosophy */}
-            <Card className="bg-brand-green bg-opacity-10 p-6 mb-8" data-testid="travel-philosophy">
+            {/* Life Philosophy */}
+            <Card className="bg-brand-green bg-opacity-10 p-6 mb-8" data-testid="life-philosophy">
               <CardContent className="p-0">
-                <h3 className="font-playfair text-xl font-bold text-brand-brown mb-3">Travel Philosophy</h3>
+                <h3 className="font-playfair text-xl font-bold text-brand-brown mb-3">Life Philosophy</h3>
                 <p className="text-gray-600 italic">
-                  "Slow travel isn't just about taking your time - it's about being present, building genuine connections, and understanding that the journey changes you as much as you experience it."
+                  "Slow living isn't just about taking your time - it's about being present, building genuine connections, and understanding that the journey changes you as much as you experience it."
                 </p>
               </CardContent>
             </Card>
@@ -129,7 +119,7 @@ export default function About() {
               Get in Touch
             </h2>
             <p className="text-xl text-gray-600 mb-8">
-              Have questions about the journey? Want to share your own travel experiences? Or maybe you have recommendations for upcoming destinations? I'd love to hear from you.
+              Have questions about the journey? Want to share your own life experiences? Or maybe you have recommendations for upcoming places to explore? I'd love to hear from you.
             </p>
 
             <ContactForm />
@@ -152,7 +142,7 @@ export default function About() {
                     <Route className="text-brand-orange mr-4 h-5 w-5" />
                     <div>
                       <div className="font-medium">Current Location</div>
-                      <div>{journey?.currentLocation || "Mysuru, Karnataka, India"}</div>
+                      <div>{journey?.currentLocation || "Satara, Maharashtra, India"}</div>
                     </div>
                   </div>
                   <div className="flex items-center text-gray-600">
@@ -172,7 +162,7 @@ export default function About() {
                 <h3 className="font-playfair text-xl font-bold text-brand-brown mb-4">Journey Update</h3>
                 <div className="flex items-center mb-3">
                   <div className="w-3 h-3 bg-brand-orange rounded-full animate-pulse mr-3"></div>
-                  <span className="font-medium text-brand-brown">Currently in {journey?.currentLocation || "Mysuru"}</span>
+                  <span className="font-medium text-brand-brown">Currently in {journey?.currentLocation || "Satara, Maharashtra"}</span>
                 </div>
                 <p className="text-gray-600 text-sm mb-4">
                   Exploring the royal heritage and palace architecture. Next stop: Coimbatore for textile culture exploration.
@@ -189,15 +179,11 @@ export default function About() {
                 <h3 className="font-playfair text-xl font-bold text-brand-brown mb-4">Quick Questions</h3>
                 <div className="space-y-3" data-testid="faq-section">
                   <details className="text-sm">
-                    <summary className="cursor-pointer text-brand-brown font-medium hover:text-brand-orange">How do you travel on ₹500/day?</summary>
-                    <p className="text-gray-600 mt-2 pl-4">Budget hostels (₹200), local transport (₹100), street food (₹150), miscellaneous (₹50).</p>
-                  </details>
-                  <details className="text-sm">
                     <summary className="cursor-pointer text-brand-brown font-medium hover:text-brand-orange">Can I follow your exact route?</summary>
                     <p className="text-gray-600 mt-2 pl-4">Yes! All route details, accommodations, and transport options are documented in destination guides.</p>
                   </details>
                   <details className="text-sm">
-                    <summary className="cursor-pointer text-brand-brown font-medium hover:text-brand-orange">Do you accept travel recommendations?</summary>
+                    <summary className="cursor-pointer text-brand-brown font-medium hover:text-brand-orange">Do you accept journey recommendations?</summary>
                     <p className="text-gray-600 mt-2 pl-4">Absolutely! Send location suggestions via the contact form above.</p>
                   </details>
                 </div>

@@ -21,7 +21,7 @@ import { eq, desc, and } from "drizzle-orm";
 
 // Authentication middleware
 const requireAuth = (req: any, res: any, next: any) => {
-  if (req.session?.userId) {
+  if (req.session?.userId || req.session?.user) {
     next();
   } else {
     res.status(401).json({ message: "Authentication required" });

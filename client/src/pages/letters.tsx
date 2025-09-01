@@ -7,10 +7,10 @@ export default function Letters() {
         {/* Header */}
         <div className="text-center mb-16" data-testid="letters-header">
           <h1 className="font-playfair text-3xl lg:text-5xl font-bold text-brand-brown mb-6">
-            Travel Letters
+            Life Letters
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Authentic stories from the road - the struggles, discoveries, and unexpected connections that make solo travel transformative. Each letter captures a moment, a lesson, or an encounter that shaped this incredible journey.
+            Authentic stories from the journey - the struggles, discoveries, and unexpected connections that make personal growth transformative. Each letter captures a moment, a lesson, or an encounter that shaped this incredible journey.
           </p>
         </div>
 

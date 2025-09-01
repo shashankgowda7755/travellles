@@ -9,7 +9,7 @@ This application supports **Neon** and **Supabase** PostgreSQL databases. Choose
 ### Setup Steps:
 1. **Create Account**: Go to [Neon Console](https://console.neon.tech/)
 2. **Create Project**: Click "Create Project"
-   - Choose project name (e.g., "travel-blog")
+   - Choose project name (e.g., "miles-alone")
    - Select region closest to your users
    - Click "Create Project"
 
