@@ -270,6 +270,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Bulk insert travel pins
+  app.post("/api/travel-pins/bulk", requireAuth, async (req, res) => {
+    try {
+      const pins = req.body.pins;
+      if (!Array.isArray(pins)) {
+        return res.status(400).json({ message: "Pins must be an array" });
+      }
+      
+      const insertedPins = [];
+      for (const pin of pins) {
+        const [newPin] = await db.insert(travelPins).values({
+          ...pin,
+          visitedDate: new Date(),
+          isVisible: true,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }).returning();
+        insertedPins.push(newPin);
+      }
+      
+      res.json({ 
+        success: true, 
+        message: `Successfully added ${insertedPins.length} travel pins`,
+        pins: insertedPins 
+      });
+    } catch (error) {
+       console.error('Bulk insert error:', error);
+       res.status(500).json({ message: "Failed to bulk insert travel pins" });
+     }
+   });
+
   // Gallery Collections CRUD (Protected)
   app.post("/api/gallery", requireAuth, async (req, res) => {
     try {
