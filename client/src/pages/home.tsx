@@ -127,19 +127,19 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto" data-testid="journey-stats">
             <div className="text-center">
               <div className="text-3xl lg:text-4xl font-bold text-brand-orange font-playfair" data-testid="stat-days">
-                {journey?.daysTraveled || 453}
+                {journey?.daysTraveled || 22}
               </div>
               <div className="text-sm lg:text-base text-gray-200">Days Journey</div>
             </div>
             <div className="text-center">
               <div className="text-3xl lg:text-4xl font-bold text-brand-orange font-playfair" data-testid="stat-states">
-                {journey?.statesCovered || 126}+
+                {journey?.statesCovered || 3}+
               </div>
               <div className="text-sm lg:text-base text-gray-200">States Visited</div>
             </div>
             <div className="text-center">
               <div className="text-3xl lg:text-4xl font-bold text-brand-orange font-playfair" data-testid="stat-distance">
-                {journey?.distanceCovered || 5500}+
+                {journey?.distanceCovered || 6500}+
               </div>
               <div className="text-sm lg:text-base text-gray-200">Kilometers</div>
             </div>
@@ -180,7 +180,7 @@ export default function Home() {
               </div>
               <div className="text-right">
                 <div className="text-2xl font-bold text-brand-orange" data-testid="journey-progress">
-                  {journey?.journeyProgress || 65}%
+                  {journey?.journeyProgress || 20}%
                 </div>
                 <div className="text-sm text-gray-600">Journey Complete</div>
               </div>

@@ -163,9 +163,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Override all journey values as requested by user
       if (result) {
-        result.daysTraveled = 45;           // Updated to 45 days
-        result.statesCovered = 12;          // Updated to 12 states
-        result.distanceCovered = 5500;      // Updated to 5500 kilometers
+        result.daysTraveled = 22;           // Updated to 22 days
+        result.statesCovered = 3;           // Updated to 3 states
+        result.distanceCovered = 6500;      // Updated to 6500 kilometers
         result.currentLocation = "Kochi, Kerala";  // Updated current location
         result.journeyProgress = 75;        // Updated to 75% progress
         result.currentCoordinates = "9.9312, 76.2673"; // Kochi coordinates
