@@ -729,8 +729,7 @@ app.get("/api/journey", async (req, res) => {
       }
     }
     
-    // Override daysTraveled to 10 as requested by user
-    tracking.daysTraveled = 10;
+    // Use actual database values without overrides
     
     console.log("Journey data retrieved successfully:", tracking.id);
     res.json(tracking);

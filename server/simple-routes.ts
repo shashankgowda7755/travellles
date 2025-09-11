@@ -161,15 +161,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const [journey] = await db.select().from(journeyTable);
       const result = journey || {};
       
-      // Override all journey values as requested by user
-      if (result) {
-        result.daysTraveled = 22;           // Updated to 22 days
-        result.statesCovered = 3;           // Updated to 3 states
-        result.distanceCovered = 6500;      // Updated to 6500 kilometers
-        result.currentLocation = "Kochi, Kerala";  // Updated current location
-        result.journeyProgress = 75;        // Updated to 75% progress
-        result.currentCoordinates = { lat: 9.9312, lng: 76.2673 }; // Kochi coordinates as object
-      }
+      // Use actual database values without overrides
       
       res.json(result);
     } catch (error) {
