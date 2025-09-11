@@ -168,7 +168,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         result.distanceCovered = 6500;      // Updated to 6500 kilometers
         result.currentLocation = "Kochi, Kerala";  // Updated current location
         result.journeyProgress = 75;        // Updated to 75% progress
-        result.currentCoordinates = "9.9312, 76.2673"; // Kochi coordinates
+        result.currentCoordinates = { lat: 9.9312, lng: 76.2673 }; // Kochi coordinates as object
       }
       
       res.json(result);
