@@ -704,16 +704,16 @@ app.get("/api/journey", async (req, res) => {
       .limit(1);
     
     if (!tracking) {
-      console.log("No journey tracking data found, returning default data");
-      // Return default data if no journey tracking data exists
+      console.log("No journey tracking data found, returning updated default data");
+      // Return updated default data if no journey tracking data exists
       return res.json({
         id: "default",
-        currentLocation: "Satara, Maharashtra",
-        currentCoordinates: { lat: 17.6805, lng: 74.0183 },
-        journeyProgress: 65,
-        daysTraveled: 10,
-        statesCovered: 12,
-        distanceCovered: 3450,
+        currentLocation: "Kochi, Kerala",
+        currentCoordinates: { lat: 9.9312, lng: 76.2673 },
+        journeyProgress: 75,
+        daysTraveled: 22,
+        statesCovered: 3,
+        distanceCovered: 6500,
         lastUpdated: new Date()
       });
     }
