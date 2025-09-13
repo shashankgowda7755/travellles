@@ -50,9 +50,10 @@ export default function DestinationCard({ destination }: DestinationCardProps) {
         <div className="relative h-56">
           <img
             src={destination.featuredImage}
-            alt={destination.name}
+            alt={`${destination.name} travel destination - ${destination.state}, ${destination.region} backpacking guide`}
             className="w-full h-full object-cover"
             data-testid="destination-card-image"
+            loading="lazy"
           />
           <div className="absolute top-4 left-4">
             <Badge 

@@ -40,8 +40,9 @@ export default function BlogCard({ post }: BlogCardProps) {
         <div className="relative h-48">
           <img
             src={post.featuredImage}
-            alt={post.title}
+            alt={`${post.title} - Solo travel blog post about authentic India experiences`}
             className="w-full h-full object-cover"
+            loading="lazy"
             data-testid="blog-card-image"
           />
           <div className="absolute top-4 left-4">

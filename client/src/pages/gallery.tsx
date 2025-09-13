@@ -11,7 +11,7 @@ import Lightbox from "@/components/gallery/lightbox";
 import YouTubePlayer from "@/components/gallery/youtube-player";
 import SocialMediaDisplay from "@/components/social-media-display";
 import DetailedSocialShare from "@/components/detailed-social-share";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { GalleryCollectionWithMedia } from "@shared/schema";
 
 export default function Gallery() {
@@ -19,6 +19,48 @@ export default function Gallery() {
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [showLightbox, setShowLightbox] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    // Add canonical URL
+    const canonicalLink = document.createElement('link');
+    canonicalLink.rel = 'canonical';
+    canonicalLink.href = 'https://www.milesalone.com/gallery';
+    document.head.appendChild(canonicalLink);
+
+    // Add breadcrumb schema markup
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.milesalone.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Gallery",
+          "item": "https://www.milesalone.com/gallery"
+        }
+      ]
+    });
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      const existingCanonical = document.querySelector('link[rel="canonical"]');
+      if (existingCanonical) {
+        document.head.removeChild(existingCanonical);
+      }
+      const existingScript = document.querySelector('script[type="application/ld+json"]');
+      if (existingScript && existingScript.textContent?.includes('BreadcrumbList')) {
+        document.head.removeChild(existingScript);
+      }
+    };
+  }, []);
 
   const { data: collection, isLoading: collectionLoading, error } = useQuery<GalleryCollectionWithMedia>({
     queryKey: ["/api/gallery", id],
@@ -41,11 +83,25 @@ export default function Gallery() {
           {/* Header */}
           <div className="text-center mb-16" data-testid="gallery-header">
             <h1 className="font-playfair text-3xl lg:text-5xl font-bold text-brand-brown mb-6">
-              Visual Journey
+              India Travel Photography Gallery
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Every photograph tells a story of discovery, challenge, and the incredible diversity of landscapes, cultures, and moments that define authentic personal exploration. These collections capture the essence of each place and the emotions of the journey.
+              Stunning photography from 6 months of solo travel across incredible India. From Kashmir's snow-capped mountains to Kerala's tropical backwaters, explore authentic moments, diverse landscapes, vibrant cultures, and unforgettable experiences captured through my lens during this transformative journey.
             </p>
+            <div className="flex flex-wrap justify-center gap-4 text-sm text-brand-brown">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                <span>15+ States Covered</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                <span>6 Months Journey</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Search className="w-4 h-4" />
+                <span>1000+ Photos</span>
+              </div>
+            </div>
             
             {/* Search Bar */}
             <div className="max-w-md mx-auto mb-8">
@@ -232,8 +288,9 @@ export default function Gallery() {
               >
                 <img
                   src={media.url}
-                  alt={media.caption || `Photo ${index + 1}`}
+                  alt={media.caption || `Travel photography ${index + 1} - Solo backpacking adventures in India`}
                   className="w-full h-full object-cover transition-transform hover:scale-105"
+                  loading="lazy"
                 />
               </div>
             ))}

@@ -288,7 +288,11 @@ export default function Home() {
               {homeContent?.guidesSectionTitle || "Journey Guides"}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto" data-testid="guides-description">
-              {homeContent?.guidesSectionDescription || "Comprehensive guides to the most incredible places on this journey. From planning to experiencing, get insider tips for authentic exploration."}
+              {homeContent?.guidesSectionDescription || "Comprehensive guides to the most incredible places on this journey. From planning to experiencing, get insider tips for authentic exploration. Read more "}
+              <Link href="/about" className="text-brand-orange hover:underline">about my journey</Link>
+              {" or explore my "}
+              <Link href="/letters" className="text-brand-orange hover:underline">personal travel letters</Link>
+              .
             </p>
           </div>
 
@@ -299,7 +303,7 @@ export default function Home() {
                   <div className="relative h-64">
                     <img
                       src={destination.featuredImage}
-                      alt={destination.name}
+                      alt={`${destination.name} travel guide - ${destination.state}, ${destination.region} destination photography`}
                       className="w-full h-full object-cover"
                       data-testid="guide-card-image"
                     />
@@ -373,7 +377,11 @@ export default function Home() {
               {homeContent?.gallerySectionTitle || "Visual Journey"}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto" data-testid="gallery-description">
-              {homeContent?.gallerySectionDescription || "Every photograph tells a story of discovery, challenge, and the incredible diversity of landscapes, cultures, and moments that define authentic India travel."}
+              {homeContent?.gallerySectionDescription || "Every photograph tells a story of discovery, challenge, and the incredible diversity of landscapes, cultures, and moments that define authentic India travel. View the complete "}
+              <Link href="/gallery" className="text-brand-orange hover:underline">photo gallery</Link>
+              {" or read detailed "}
+              <Link href="/journey" className="text-brand-orange hover:underline">destination guides</Link>
+              .
             </p>
           </div>
 
@@ -393,7 +401,7 @@ export default function Home() {
                   <div className="relative h-64">
                     <img
                       src={collection.coverImage}
-                      alt={collection.title}
+                      alt={`${collection.title} - Travel photography collection showcasing authentic India experiences`}
                       className="w-full h-full object-cover"
                       data-testid="collection-cover-image"
                     />
