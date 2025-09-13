@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="bg-brand-brown text-white py-16" data-testid="footer">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {/* Brand */}
           <div>
             <div className="flex items-center space-x-2 mb-6">
@@ -54,28 +54,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Journey Progress */}
-          <div>
-            <h3 className="font-playfair text-lg font-bold mb-4">Journey Progress</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-gray-300">Days Traveled</span>
-                <span className="text-white font-semibold" data-testid="stats-days">78 / 120</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-300">States Covered</span>
-                <span className="text-white font-semibold" data-testid="stats-states">9 / 15+</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-300">Distance</span>
-                <span className="text-white font-semibold" data-testid="stats-distance">1,950 km</span>
-              </div>
-              <div className="w-full bg-gray-600 rounded-full h-2 mt-4">
-                <div className="bg-brand-orange h-2 rounded-full" style={{ width: "65%" }} data-testid="progress-bar"></div>
-              </div>
-              <p className="text-xs text-gray-400" data-testid="progress-text">65% journey complete</p>
-            </div>
-          </div>
+
         </div>
 
         {/* Bottom Footer */}
