@@ -13,7 +13,7 @@ import {
   galleryCollections, 
   contactMessages,
   travelPins, 
-  journeyTracking as journeyTable, 
+  journeyTracking, 
   users,
   homePageContent 
 } from "@shared/schema";
@@ -158,7 +158,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Journey
   app.get("/api/journey", async (req, res) => {
     try {
-      const [journey] = await db.select().from(journeyTable);
+      const [journey] = await db.select().from(journeyTracking);
       
       if (!journey) {
         // Return default values when no database data exists
@@ -350,21 +350,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Journey Tracking Update (Protected)
   app.put("/api/journey", requireAuth, async (req, res) => {
     try {
-      const existing = await db.select().from(journeyTable).limit(1);
+      const existing = await db.select().from(journeyTracking).limit(1);
       
       if (existing.length === 0) {
-        const [newJourney] = await db.insert(journeyTable).values({
+        const [newJourney] = await db.insert(journeyTracking).values({
           ...req.body,
           lastUpdated: new Date()
         }).returning();
         res.json(newJourney);
       } else {
-        const [updatedJourney] = await db.update(journeyTable)
+        const [updatedJourney] = await db.update(journeyTracking)
           .set({
             ...req.body,
             lastUpdated: new Date()
           })
-          .where(eq(journeyTable.id, existing[0].id))
+          .where(eq(journeyTracking.id, existing[0].id))
           .returning();
         res.json(updatedJourney);
       }
