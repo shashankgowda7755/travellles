@@ -1,42 +1,89 @@
 import { Link } from "wouter";
-import { MapPin, Camera, BookOpen, User } from "lucide-react";
+import { MapPin, Camera, BookOpen, User, Home, FileText, Shield } from "lucide-react";
 
 interface InternalLinksProps {
   currentPage?: string;
   className?: string;
+  showRelated?: boolean;
 }
 
-export default function InternalLinks({ currentPage, className = "" }: InternalLinksProps) {
-  const links = [
+export default function InternalLinks({ currentPage, className = "", showRelated = true }: InternalLinksProps) {
+  const allLinks = [
+    {
+      href: "/",
+      label: "Home",
+      description: "Discover solo travel adventures across India",
+      icon: Home,
+      keywords: "solo travel India, backpacking adventures",
+      category: "main"
+    },
     {
       href: "/journey",
-      label: "Travel Guides",
-      description: "Detailed destination guides from solo India journey",
+      label: "Journey Map",
+      description: "Interactive travel guides and destination insights",
       icon: MapPin,
-      keywords: "travel guides India, backpacking destinations"
+      keywords: "India travel guides, solo backpacking destinations",
+      category: "main"
     },
     {
       href: "/gallery",
       label: "Photo Gallery",
-      description: "Authentic travel photography collections",
+      description: "Stunning travel photography from across India",
       icon: Camera,
-      keywords: "India travel photos, solo backpacking photography"
+      keywords: "India travel photography, scenic landscapes",
+      category: "main"
     },
     {
       href: "/letters",
       label: "Travel Letters",
-      description: "Personal stories and experiences from the road",
+      description: "Personal stories and authentic travel experiences",
       icon: BookOpen,
-      keywords: "travel stories India, personal journey experiences"
+      keywords: "travel stories India, solo journey experiences",
+      category: "main"
     },
     {
       href: "/about",
       label: "About Shashank",
-      description: "Solo traveler sharing authentic India experiences",
+      description: "Meet the solo traveler behind Miles Alone",
       icon: User,
-      keywords: "solo travel blogger, India backpacking expert"
+      keywords: "solo travel blogger, India travel expert",
+      category: "main"
+    },
+    {
+      href: "/terms",
+      label: "Terms of Service",
+      description: "Website terms and conditions",
+      icon: FileText,
+      keywords: "terms conditions, website policy",
+      category: "legal"
+    },
+    {
+      href: "/privacy",
+      label: "Privacy Policy",
+      description: "How we protect your personal information",
+      icon: Shield,
+      keywords: "privacy policy, data protection",
+      category: "legal"
     }
   ];
+
+  // Get related content based on current page
+  const getRelatedLinks = () => {
+    const pageRelations = {
+      "/": ["/journey", "/gallery", "/letters"],
+      "/journey": ["/gallery", "/letters", "/about"],
+      "/gallery": ["/journey", "/letters", "/"],
+      "/letters": ["/journey", "/gallery", "/about"],
+      "/about": ["/journey", "/letters", "/gallery"],
+      "/terms": ["/privacy", "/about", "/"],
+      "/privacy": ["/terms", "/about", "/"]
+    };
+    
+    const related = pageRelations[currentPage as keyof typeof pageRelations] || ["/journey", "/gallery", "/letters"];
+    return allLinks.filter(link => related.includes(link.href));
+  };
+
+  const links = showRelated ? getRelatedLinks() : allLinks.filter(link => link.href !== currentPage && link.category === "main");
 
   const filteredLinks = links.filter(link => link.href !== currentPage);
 

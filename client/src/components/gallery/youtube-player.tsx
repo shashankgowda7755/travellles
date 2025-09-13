@@ -63,7 +63,7 @@ export default function YouTubePlayer({ url, title, description }: YouTubePlayer
       <div className="aspect-video relative">
         <img
           src={thumbnailUrl}
-          alt={title}
+          alt={`Travel video thumbnail - ${title || 'India travel experience and adventure stories'}`}
           className="w-full h-full object-cover transition-transform group-hover:scale-105"
           data-testid="youtube-thumbnail-image"
         />

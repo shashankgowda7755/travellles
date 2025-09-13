@@ -7,6 +7,7 @@ import DestinationDetailDialog from "./destination-detail-dialog";
 import DestinationCardShare from "./destination-card-share";
 import SocialMediaDisplay from "@/components/social-media-display";
 import type { Destination } from "@shared/schema";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 
 interface DestinationCardProps {
   destination: Destination;
@@ -48,12 +49,14 @@ export default function DestinationCard({ destination }: DestinationCardProps) {
         onClick={handleViewDetails}
       >
         <div className="relative h-56">
-          <img
+          <OptimizedImage
             src={destination.featuredImage}
-            alt={`${destination.name} travel destination - ${destination.state}, ${destination.region} backpacking guide`}
+            alt={`${destination.name} - Solo travel destination in India with scenic landscapes and cultural attractions`}
             className="w-full h-full object-cover"
             data-testid="destination-card-image"
-            loading="lazy"
+            width={400}
+            height={224}
+            quality={85}
           />
           <div className="absolute top-4 left-4">
             <Badge 

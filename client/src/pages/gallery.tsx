@@ -11,6 +11,8 @@ import Lightbox from "@/components/gallery/lightbox";
 import YouTubePlayer from "@/components/gallery/youtube-player";
 import SocialMediaDisplay from "@/components/social-media-display";
 import DetailedSocialShare from "@/components/detailed-social-share";
+import InternalLinks from "@/components/seo/internal-links";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { useState, useEffect } from "react";
 import type { GalleryCollectionWithMedia } from "@shared/schema";
 
@@ -286,11 +288,13 @@ export default function Gallery() {
                 onClick={() => openLightbox(index)}
                 data-testid={`photo-${index}`}
               >
-                <img
+                <OptimizedImage
                   src={media.url}
                   alt={media.caption || `Travel photography ${index + 1} - Solo backpacking adventures in India`}
                   className="w-full h-full object-cover transition-transform hover:scale-105"
-                  loading="lazy"
+                  width={400}
+                  height={300}
+                  quality={90}
                 />
               </div>
             ))}
@@ -306,6 +310,11 @@ export default function Gallery() {
             onIndexChange={setLightboxIndex}
           />
         )}
+
+        {/* Internal Links for SEO */}
+        <div className="mt-16">
+          <InternalLinks currentPage={`/gallery/${collection?.id}`} className="" />
+        </div>
         
         {/* Bottom spacer */}
         <div className="h-24"></div>

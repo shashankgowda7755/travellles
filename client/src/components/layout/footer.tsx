@@ -64,9 +64,9 @@ export default function Footer() {
               © 2025 Milesalone. All rights reserved. Built with passion for authentic travel.
             </p>
             <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="footer-privacy">Privacy Policy</a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="footer-terms">Terms of Use</a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="footer-contact">Contact</a>
+              <Link href="/privacy" className="text-gray-300 hover:text-white transition-colors" data-testid="footer-privacy">Privacy Policy</Link>
+              <Link href="/terms" className="text-gray-300 hover:text-white transition-colors" data-testid="footer-terms">Terms of Use</Link>
+              <a href="mailto:contact@milesalone.com" className="text-gray-300 hover:text-white transition-colors" data-testid="footer-contact">Contact</a>
             </div>
           </div>
         </div>

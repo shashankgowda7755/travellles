@@ -60,7 +60,7 @@ export default function GalleryGrid({ searchQuery = "" }: GalleryGridProps) {
                 <div className="relative h-64">
                   <img
                     src={collection.coverImage}
-                    alt={`${collection.title} - Travel photography collection from India solo backpacking adventures`}
+                    alt={`${collection.title} - Travel photography collection from India showcasing ${collection.location || 'scenic destinations'}`}
                     className="w-full h-full object-cover"
                     data-testid="collection-cover-image"
                   />
@@ -90,7 +90,7 @@ export default function GalleryGrid({ searchQuery = "" }: GalleryGridProps) {
                       >
                         <img
                           src={media?.url || collection.coverImage}
-                          alt={media?.caption || `${collection.title} travel photo ${index + 1} - India backpacking journey`}
+                          alt={`${media?.caption || collection.title} - Travel photography from ${collection.location || 'India'} capturing authentic cultural experiences`}
                           className="w-full h-full object-cover"
                         />
                         {media?.type === 'video' && (

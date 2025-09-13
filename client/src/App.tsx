@@ -12,6 +12,8 @@ import BlogPost from "@/pages/blog-post";
 import DestinationDetail from "@/pages/destination-detail";
 import Gallery from "@/pages/gallery";
 import About from "@/pages/about";
+import Terms from "@/pages/terms";
+import Privacy from "@/pages/privacy";
 import Admin from "@/pages/admin";
 import NotFound from "@/pages/not-found";
 import Header from "@/components/layout/header";
@@ -33,6 +35,8 @@ function Router() {
         <Route path="/gallery" component={Gallery} />
         <Route path="/gallery/:id" component={Gallery} />
         <Route path="/about" component={About} />
+        <Route path="/terms" component={Terms} />
+        <Route path="/privacy" component={Privacy} />
         <Route path="/admin" component={Admin} />
         <Route component={NotFound} />
       </Switch>

@@ -114,7 +114,7 @@ export default function Lightbox({ collection, initialIndex, onClose, onIndexCha
           ) : (
             <img
               src={currentMedia.url}
-              alt={currentMedia.caption || `Media ${currentIndex + 1}`}
+              alt={`${currentMedia.caption || `Media ${currentIndex + 1}`} - High-resolution travel photography from India showcasing scenic landscapes and cultural heritage`}
               className="max-w-full max-h-full object-contain rounded-lg"
               data-testid="lightbox-image"
             />

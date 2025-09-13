@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { BlogPost as BlogPostType } from "@shared/schema";
 import SocialMediaDisplay from "@/components/social-media-display";
 import DetailedSocialShare from "@/components/detailed-social-share";
+import InternalLinks from "@/components/seo/internal-links";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -95,7 +96,7 @@ export default function BlogPost() {
         <div className="relative mb-8 rounded-2xl overflow-hidden shadow-xl" data-testid="blog-post-hero">
           <img
             src={post.featuredImage}
-            alt={post.title}
+            alt={`${post.title} - Solo travel story and guide for exploring India`}
             className="w-full h-96 lg:h-[500px] object-cover"
           />
           <div className="absolute inset-0 bg-black/20"></div>
@@ -226,6 +227,9 @@ export default function BlogPost() {
             </Link>
           </div>
         </div>
+
+        {/* Internal Links for SEO */}
+        <InternalLinks currentPage={`/letters/${post.slug}`} className="mt-16" />
       </div>
     </div>
   );

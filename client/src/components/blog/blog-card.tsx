@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import BlogCardShare from "./blog-card-share";
 import type { BlogPost } from "@shared/schema";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 
 interface BlogCardProps {
   post: BlogPost;
@@ -38,11 +39,13 @@ export default function BlogCard({ post }: BlogCardProps) {
     <Link href={`/letters/${post.slug}`} className="block" data-testid={`blog-card-link-${post.slug}`}>
       <Card className="overflow-hidden shadow-lg card-hover bg-white cursor-pointer" data-testid={`blog-card-${post.slug}`}>
         <div className="relative h-48">
-          <img
+          <OptimizedImage
             src={post.featuredImage}
-            alt={`${post.title} - Solo travel blog post about authentic India experiences`}
+            alt={`${post.title} - Solo travel blog post about India destinations and cultural experiences`}
             className="w-full h-full object-cover"
-            loading="lazy"
+            width={400}
+            height={192}
+            quality={85}
             data-testid="blog-card-image"
           />
           <div className="absolute top-4 left-4">

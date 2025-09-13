@@ -9,6 +9,7 @@ import DestinationMap from "@/components/destinations/destination-map";
 import RelatedContent from "@/components/destinations/related-content";
 import SocialMediaDisplay from "@/components/social-media-display";
 import DetailedSocialShare from "@/components/detailed-social-share";
+import InternalLinks from "@/components/seo/internal-links";
 
 import { Destination } from "@shared/schema";
 
@@ -104,9 +105,9 @@ export default function DestinationDetail() {
         {/* Hero Section */}
         <div className="relative mb-8 rounded-2xl overflow-hidden shadow-xl" data-testid="destination-hero">
           <img
-            src={destination.featuredImage}
-            alt={destination.name}
-            className="w-full h-96 lg:h-[500px] object-cover"
+          src={destination.featuredImage}
+          alt={`${destination.name} travel destination - Scenic views and attractions for solo travelers in ${destination.state}, India`}
+          className="w-full h-96 lg:h-[500px] object-cover"
           />
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="absolute bottom-8 left-8 text-white">
@@ -300,6 +301,9 @@ export default function DestinationDetail() {
         <div className="mt-12 space-y-6 mb-16">
           <RelatedContent destination={destination} />
         </div>
+
+        {/* Internal Links for SEO */}
+        <InternalLinks currentPage={`/journey/${destination.slug}`} className="mt-16" />
       </div>
     </div>
   );

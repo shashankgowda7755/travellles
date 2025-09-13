@@ -6,6 +6,7 @@ import { MapPin, Calendar, Route, Coins, ChevronDown, Mail, BookOpen, Images, Na
 import InteractiveMap from "@/components/journey/interactive-map";
 import BlogCard from "@/components/blog/blog-card";
 import NewsletterForm from "@/components/newsletter/newsletter-form";
+import InternalLinks from "@/components/seo/internal-links";
 import { useJourney } from "@/hooks/use-journey";
 import { useHomeContent } from "@/hooks/use-home-content";
 // Note: Inline editing removed - all editing is now done through admin panel
@@ -303,7 +304,7 @@ export default function Home() {
                   <div className="relative h-64">
                     <img
                       src={destination.featuredImage}
-                      alt={`${destination.name} travel guide - ${destination.state}, ${destination.region} destination photography`}
+                      alt={`${destination.name} travel guide - Solo backpacking destination in ${destination.state || 'India'} with cultural attractions`}
                       className="w-full h-full object-cover"
                       data-testid="guide-card-image"
                     />
@@ -401,7 +402,7 @@ export default function Home() {
                   <div className="relative h-64">
                     <img
                       src={collection.coverImage}
-                      alt={`${collection.title} - Travel photography collection showcasing authentic India experiences`}
+                      alt={`${collection.title} - Travel photography collection showcasing India's landscapes and cultural heritage`}
                       className="w-full h-full object-cover"
                       data-testid="collection-cover-image"
                     />
@@ -474,6 +475,13 @@ export default function Home() {
               </Button>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Internal Links for SEO */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <InternalLinks currentPage="/" showRelated={false} />
         </div>
       </section>
 

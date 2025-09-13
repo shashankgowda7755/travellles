@@ -77,7 +77,7 @@ export default function About() {
             <div className="relative">
               <img
                 src="https://i.postimg.cc/sQxd5ry0/IMG20250424065834.jpg"
-                alt="Shashank with backpack in mountain setting"
+                alt="Shashank Gowda - Solo travel blogger exploring scenic mountain landscapes in India"
                 className="rounded-2xl shadow-2xl w-full h-auto object-cover"
                 data-testid="traveler-portrait"
               />
