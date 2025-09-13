@@ -25,9 +25,30 @@ export default function AdminDashboard({
   onEditGallery 
 }: AdminDashboardProps) {
   // Fetch recent data for activity items
-  const { data: blogPosts } = useQuery<BlogPost[]>({ queryKey: ['/api/blog-posts'] });
-  const { data: destinations } = useQuery<Destination[]>({ queryKey: ['/api/destinations'] });
-  const { data: collections } = useQuery<GalleryCollectionWithMedia[]>({ queryKey: ['/api/gallery'] });
+  const { data: blogPosts } = useQuery<BlogPost[]>({ 
+  queryKey: ['/api/blog-posts'],
+  queryFn: async () => {
+    const response = await fetch('/api/blog-posts');
+    if (!response.ok) throw new Error('Failed to fetch blog posts');
+    return response.json();
+  }
+});
+const { data: destinations } = useQuery<Destination[]>({ 
+  queryKey: ['/api/destinations'],
+  queryFn: async () => {
+    const response = await fetch('/api/destinations');
+    if (!response.ok) throw new Error('Failed to fetch destinations');
+    return response.json();
+  }
+});
+const { data: collections } = useQuery<GalleryCollectionWithMedia[]>({ 
+  queryKey: ['/api/gallery'],
+  queryFn: async () => {
+    const response = await fetch('/api/gallery');
+    if (!response.ok) throw new Error('Failed to fetch gallery collections');
+    return response.json();
+  }
+});
 
   // Get most recent items
   const latestPost = blogPosts?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];

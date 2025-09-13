@@ -15,6 +15,13 @@ export default function InteractiveMap({ height = "500px", showPins = true }: In
 
   const { data: travelPins, isLoading, error } = useQuery<TravelPin[]>({
     queryKey: ['/api/travel-pins'],
+    queryFn: async () => {
+      const response = await fetch('/api/travel-pins');
+      if (!response.ok) {
+        throw new Error(`Failed to fetch travel pins: ${response.status}`);
+      }
+      return response.json();
+    },
   });
 
   console.log('InteractiveMap render:', { travelPins, isLoading, error, showPins });
