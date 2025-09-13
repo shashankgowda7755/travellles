@@ -171,7 +171,7 @@ export const homePageContent = pgTable("home_page_content", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   // Hero section
   heroTitle: text("hero_title").notNull().default("Raw Roads,\nReal Discovery"),
-  heroSubtitle: text("hero_subtitle").notNull().default("Join an authentic personal journey of discovery, growth, and meaningful experiences"),
+  heroSubtitle: text("hero_subtitle").notNull().default("Join Shashank's authentic 6-month journey across India, from Kashmir's valleys to Kanyakumari's shores"),
   heroBackgroundImage: text("hero_background_image").notNull().default("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"),
   exploreButtonText: text("explore_button_text").notNull().default("Explore Journey"),
   diariesButtonText: text("diaries_button_text").notNull().default("Read Diaries"),

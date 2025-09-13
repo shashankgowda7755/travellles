@@ -46,7 +46,7 @@ export default function About() {
               I'm Shashank, and this is my attempt to document the real India - not the Instagram-perfect version, but the authentic, challenging, beautiful, and transformative experience of traveling across this incredible country on a shoestring budget.
             </p>
             <p className="text-gray-600 mb-8" data-testid="about-description">
-              Starting from the serene valleys of Kashmir and heading to the southern tip of Kanyakumari, this 4-month journey covers over 3,000 kilometers, 15+ states, and countless stories of human connection, cultural discovery, and personal growth.
+              Starting from the serene valleys of Kashmir and heading to the southern tip of Kanyakumari, this 6-month journey covers over 3,000 kilometers, 15+ states, and countless stories of human connection, cultural discovery, and personal growth.
             </p>
 
             {/* Journey Details */}
@@ -57,7 +57,7 @@ export default function About() {
                     <Calendar className="text-brand-orange mr-3 h-5 w-5" />
                     <span className="font-semibold text-brand-brown">Duration</span>
                   </div>
-                  <p className="text-gray-600">4 months (Aug - Nov 2025)</p>
+                  <p className="text-gray-600">6 months (Aug - Jan 2026)</p>
                 </CardContent>
               </Card>
               

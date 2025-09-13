@@ -97,7 +97,7 @@ export default function Home() {
             )}
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-100 max-w-2xl mx-auto" data-testid="hero-subtitle">
-            {homeContent?.heroSubtitle || "Join Shashank's authentic 4-month journey across India, from Kashmir's valleys to Kanyakumari's shores"}
+            {homeContent?.heroSubtitle || "Join Shashank's authentic 6-month journey across India, from Kashmir's valleys to Kanyakumari's shores"}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/journey">
