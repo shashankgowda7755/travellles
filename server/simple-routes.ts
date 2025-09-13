@@ -159,13 +159,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/journey", async (req, res) => {
     try {
       const [journey] = await db.select().from(journeyTable);
-      const result = journey || {};
       
-      // Use actual database values without overrides
+      if (!journey) {
+        // Return default values when no database data exists
+        return res.json({
+          id: "default",
+          currentLocation: "Kochi, Kerala",
+          currentCoordinates: { lat: 9.9312, lng: 76.2673 },
+          journeyProgress: 20,
+          daysTraveled: 24,
+          statesCovered: 3,
+          distanceCovered: 6500,
+          lastUpdated: new Date()
+        });
+      }
       
-      res.json(result);
+      res.json(journey);
     } catch (error) {
-      res.json({});
+      // Return default values on error
+      res.json({
+        id: "default",
+        currentLocation: "Kochi, Kerala",
+        currentCoordinates: { lat: 9.9312, lng: 76.2673 },
+        journeyProgress: 20,
+        daysTraveled: 24,
+        statesCovered: 3,
+        distanceCovered: 6500,
+        lastUpdated: new Date()
+      });
     }
   });
 

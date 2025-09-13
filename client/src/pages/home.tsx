@@ -127,7 +127,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto" data-testid="journey-stats">
             <div className="text-center">
               <div className="text-3xl lg:text-4xl font-bold text-brand-orange font-playfair" data-testid="stat-days">
-                {journey?.daysTraveled || 22}
+                {journey?.daysTraveled || 24}
               </div>
               <div className="text-sm lg:text-base text-gray-200">Days Journey</div>
             </div>

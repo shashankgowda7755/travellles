@@ -710,8 +710,8 @@ app.get("/api/journey", async (req, res) => {
         id: "default",
         currentLocation: "Kochi, Kerala",
         currentCoordinates: { lat: 9.9312, lng: 76.2673 },
-        journeyProgress: 75,
-        daysTraveled: 22,
+        journeyProgress: 20,
+        daysTraveled: 24,
         statesCovered: 3,
         distanceCovered: 6500,
         lastUpdated: new Date()
