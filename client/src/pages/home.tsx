@@ -176,7 +176,7 @@ export default function Home() {
                     Currently in: {journey?.currentLocation || "Kochi, Kerala"}
                   </span>
                 </div>
-                <p className="text-gray-600">Exploring the royal heritage and palace architecture</p>
+                <p className="text-gray-600">{journey?.currentLocationDescription || "Exploring the royal heritage and palace architecture"}</p>
               </div>
               <div className="text-right">
                 <div className="text-2xl font-bold text-brand-orange" data-testid="journey-progress">
@@ -225,8 +225,8 @@ export default function Home() {
               <CardContent className="p-0">
                 <MapPin className="mx-auto text-brand-orange text-3xl mb-4" />
                 <h3 className="font-playfair text-xl font-bold text-brand-brown mb-2">Current Location</h3>
-                <p className="text-gray-600">{journey?.currentLocation || "Kochi, Kerala"}</p>
-                <p className="text-sm text-gray-500 mt-2">Hill station charm and scenic beauty</p>
+                <p className="text-gray-600">{journey?.currentLocation || "Thrissur, Kerala"}</p>
+                <p className="text-sm text-gray-500 mt-2">{journey?.currentLocationDescription || "A city where festivals never really end"}</p>
               </CardContent>
             </Card>
             

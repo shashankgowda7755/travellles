@@ -127,7 +127,8 @@ export const contactMessages = pgTable("contact_messages", {
 // Journey tracking
 export const journeyTracking = pgTable("journey_tracking", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  currentLocation: text("current_location").notNull(),
+  currentLocation: text("current_location").notNull().default("Thrissur, Kerala"),
+  currentLocationDescription: text("current_location_description").notNull().default("A city where festivals never really end"),
   currentCoordinates: jsonb("current_coordinates").$type<{lat: number, lng: number}>().notNull(),
   journeyProgress: integer("journey_progress").notNull().default(0), // percentage
   daysTraveled: integer("days_traveled").notNull().default(0),

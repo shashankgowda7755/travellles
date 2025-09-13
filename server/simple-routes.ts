@@ -164,8 +164,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Return default values when no database data exists
         return res.json({
           id: "default",
-          currentLocation: "Kochi, Kerala",
-          currentCoordinates: { lat: 9.9312, lng: 76.2673 },
+          currentLocation: "Thrissur, Kerala",
+          currentLocationDescription: "A city where festivals never really end",
+          currentCoordinates: { lat: 10.5276, lng: 76.2144 },
           journeyProgress: 20,
           daysTraveled: 24,
           statesCovered: 3,
@@ -179,8 +180,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Return default values on error
       res.json({
         id: "default",
-        currentLocation: "Kochi, Kerala",
-        currentCoordinates: { lat: 9.9312, lng: 76.2673 },
+        currentLocation: "Thrissur, Kerala",
+        currentLocationDescription: "A city where festivals never really end",
+        currentCoordinates: { lat: 10.5276, lng: 76.2144 },
         journeyProgress: 20,
         daysTraveled: 24,
         statesCovered: 3,

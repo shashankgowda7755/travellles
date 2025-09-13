@@ -708,8 +708,9 @@ app.get("/api/journey", async (req, res) => {
       // Return updated default data if no journey tracking data exists
       return res.json({
         id: "default",
-        currentLocation: "Kochi, Kerala",
-        currentCoordinates: { lat: 9.9312, lng: 76.2673 },
+        currentLocation: "Thrissur, Kerala",
+        currentLocationDescription: "A city where festivals never really end",
+        currentCoordinates: { lat: 10.5276, lng: 76.2144 },
         journeyProgress: 20,
         daysTraveled: 24,
         statesCovered: 3,

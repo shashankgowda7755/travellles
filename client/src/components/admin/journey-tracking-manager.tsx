@@ -13,6 +13,7 @@ import { Save, MapPin } from "lucide-react";
 
 const journeyTrackingSchema = z.object({
   currentLocation: z.string().min(1, "Current location is required"),
+  currentLocationDescription: z.string().min(1, "Location description is required"),
   currentCoordinates: z.object({
     lat: z.number().min(-90).max(90),
     lng: z.number().min(-180).max(180)
@@ -41,13 +42,14 @@ export default function JourneyTrackingManager() {
   const form = useForm<JourneyTrackingForm>({
     resolver: zodResolver(journeyTrackingSchema),
     defaultValues: {
-      currentLocation: journey?.currentLocation || "",
+      currentLocation: journey?.currentLocation || "Thrissur, Kerala",
+      currentLocationDescription: journey?.currentLocationDescription || "A city where festivals never really end",
       currentCoordinates: {
-        lat: journey?.currentCoordinates?.lat || 0,
-        lng: journey?.currentCoordinates?.lng || 0
+        lat: journey?.currentCoordinates?.lat || 10.5276,
+        lng: journey?.currentCoordinates?.lng || 76.2144
       },
-      journeyProgress: journey?.journeyProgress || 0,
-      daysTraveled: journey?.daysTraveled || 0,
+      journeyProgress: journey?.journeyProgress || 65,
+      daysTraveled: journey?.daysTraveled || 78,
       statesCovered: journey?.statesCovered || 0,
       distanceCovered: journey?.distanceCovered || 0,
       instagramStoryUrl: journey?.instagramStoryUrl || "",
@@ -142,11 +144,24 @@ export default function JourneyTrackingManager() {
               <Input
                 id="currentLocation"
                 {...form.register("currentLocation")}
-                placeholder="e.g., Mysuru, Karnataka"
+                placeholder="e.g., Thrissur, Kerala"
               />
               {form.formState.errors.currentLocation && (
                 <p className="text-sm text-red-500">
                   {form.formState.errors.currentLocation.message}
+                </p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="currentLocationDescription">Location Description</Label>
+              <Input
+                id="currentLocationDescription"
+                {...form.register("currentLocationDescription")}
+                placeholder="e.g., A city where festivals never really end"
+              />
+              {form.formState.errors.currentLocationDescription && (
+                <p className="text-sm text-red-500">
+                  {form.formState.errors.currentLocationDescription.message}
                 </p>
               )}
             </div>
