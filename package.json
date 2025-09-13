@@ -21,7 +21,9 @@
     "check": "tsc",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "db:init": "tsx initialize_database_content.ts",
+    "fix:production": "node fix-production-database.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
