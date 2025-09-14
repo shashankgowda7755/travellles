@@ -67,6 +67,10 @@ const initializeDatabase = async () => {
 // Create Express app
 const app = express();
 
+// Configure trust proxy for Vercel deployment
+// This is required for rate limiting to work correctly with X-Forwarded-For headers
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
