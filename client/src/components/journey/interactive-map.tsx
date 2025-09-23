@@ -63,73 +63,71 @@ export default function InteractiveMap({ height = "500px", showPins = true }: In
 
         // Create custom icon based on pin type and color
         const icon = L.divIcon({
-          className: 'custom-pin-marker',
           html: `
             <div style="
-              background-color: ${pin.pinColor};
-              width: 20px;
-              height: 20px;
+              width: 24px;
+              height: 24px;
+              background: linear-gradient(135deg, ${pin.pinColor}, ${pin.pinColor}dd);
+              border: 3px solid #ffffff;
               border-radius: 50%;
-              border: 3px solid white;
-              box-shadow: 0 2px 6px rgba(0,0,0,0.3);
               display: flex;
               align-items: center;
               justify-content: center;
-              font-size: 10px;
-              color: white;
+              font-size: 12px;
+              box-shadow: 0 4px 12px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.1);
               position: relative;
+              transition: all 0.3s ease;
             ">
               ${getPinIcon(pin.pinType)}
               <div style="
                 position: absolute;
-                bottom: -8px;
+                bottom: -10px;
                 left: 50%;
                 transform: translateX(-50%);
                 width: 0;
                 height: 0;
-                border-left: 4px solid transparent;
-                border-right: 4px solid transparent;
-                border-top: 8px solid ${pin.pinColor};
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: 10px solid ${pin.pinColor};
+                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
               "></div>
             </div>
           `,
-          iconSize: [20, 28],
-          iconAnchor: [10, 28],
-          popupAnchor: [0, -28]
+          iconSize: [24, 34],
+          iconAnchor: [12, 34],
+          popupAnchor: [0, -34]
         });
 
         const marker = L.marker([pin.coordinates.lat, pin.coordinates.lng], { icon })
           .bindPopup(`
-            <div class="p-3 min-w-[200px]">
-              <div class="flex items-center space-x-2 mb-2">
-                <div class="w-3 h-3 rounded-full" style="background-color: ${pin.pinColor}"></div>
-                <strong class="text-brand-brown text-lg">${pin.name}</strong>
+            <div class="p-4 min-w-[220px] bg-brand-cream rounded-lg border border-brand-orange/20">
+              <div class="flex items-center space-x-3 mb-3">
+                <div class="w-4 h-4 rounded-full shadow-sm" style="background: linear-gradient(135deg, ${pin.pinColor}, ${pin.pinColor}dd)"></div>
+                <strong class="text-brand-brown text-lg font-playfair">${pin.name}</strong>
               </div>
-              ${pin.city ? `<p class="text-sm text-gray-600 mb-1">${pin.city}, ${pin.country}</p>` : `<p class="text-sm text-gray-600 mb-1">${pin.country}</p>`}
-              ${pin.description ? `<p class="text-sm text-gray-700 mb-2">${pin.description}</p>` : ''}
+              ${pin.city ? `<p class="text-sm text-brand-brown/70 mb-2 font-medium">${pin.city}, ${pin.country}</p>` : `<p class="text-sm text-brand-brown/70 mb-2 font-medium">${pin.country}</p>`}
+              ${pin.description ? `<p class="text-sm text-brand-brown/80 mb-3 leading-relaxed">${pin.description}</p>` : ''}
               ${pin.rating && pin.rating > 0 ? `
-                <div class="flex items-center space-x-1 mb-2">
+                <div class="flex items-center space-x-1 mb-3">
                   ${Array.from({ length: 5 }, (_, i) => 
-                    `<span class="text-yellow-400">${i < (pin.rating || 0) ? '★' : '☆'}</span>`
+                    `<span class="text-brand-orange text-sm">${i < (pin.rating || 0) ? '★' : '☆'}</span>`
                   ).join('')}
-                  <span class="text-xs text-gray-500">(${pin.rating}/5)</span>
+                  <span class="text-xs text-brand-brown/60 ml-1">(${pin.rating}/5)</span>
                 </div>
               ` : ''}
               <div class="flex items-center justify-between">
-                <span class="inline-block px-2 py-1 text-xs rounded-full" style="
-                  background-color: ${pin.pinColor}20;
-                  color: ${pin.pinColor};
-                  border: 1px solid ${pin.pinColor}40;
-                ">${getPinTypeLabel(pin.pinType)}</span>
+                <span class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-white border border-brand-orange/30 text-brand-orange">${getPinTypeLabel(pin.pinType)}</span>
                 ${pin.visitedDate ? `
-                  <span class="text-xs text-gray-500">
+                  <span class="text-xs text-brand-brown/60 font-medium">
                     ${new Date(pin.visitedDate).toLocaleDateString()}
                   </span>
                 ` : ''}
               </div>
-              ${pin.notes ? `<p class="text-xs text-gray-600 mt-2 italic">${pin.notes}</p>` : ''}
+              ${pin.notes ? `<p class="text-xs text-brand-brown/70 mt-3 italic bg-white/50 p-2 rounded border-l-2 border-brand-orange/40">${pin.notes}</p>` : ''}
             </div>
-          `)
+          `, {
+            className: 'custom-popup'
+          })
           .addTo(map);
       });
     }
