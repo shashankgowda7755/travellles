@@ -32,6 +32,9 @@ function Router() {
         <Route path="/journey/:slug" component={DestinationDetail} />
         <Route path="/letters" component={Letters} />
         <Route path="/letters/:slug" component={BlogPost} />
+        {/* Alias routes to match sitemap URLs */}
+        <Route path="/blog" component={Letters} />
+        <Route path="/blog/:slug" component={BlogPost} />
         <Route path="/gallery" component={Gallery} />
         <Route path="/gallery/:id" component={Gallery} />
         <Route path="/about" component={About} />
