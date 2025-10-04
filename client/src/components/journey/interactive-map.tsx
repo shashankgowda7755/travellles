@@ -61,44 +61,7 @@ export default function InteractiveMap({ height = "500px", showPins = true }: In
           return; // Skip this pin
         }
 
-        // Create custom icon based on pin type and color
-        const icon = L.divIcon({
-          html: `
-            <div style="
-              width: 24px;
-              height: 24px;
-              background: linear-gradient(135deg, ${pin.pinColor}, ${pin.pinColor}dd);
-              border: 3px solid #ffffff;
-              border-radius: 50%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 12px;
-              box-shadow: 0 4px 12px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.1);
-              position: relative;
-              transition: all 0.3s ease;
-            ">
-              ${getPinIcon(pin.pinType)}
-              <div style="
-                position: absolute;
-                bottom: -10px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 0;
-                height: 0;
-                border-left: 6px solid transparent;
-                border-right: 6px solid transparent;
-                border-top: 10px solid ${pin.pinColor};
-                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-              "></div>
-            </div>
-          `,
-          iconSize: [24, 34],
-          iconAnchor: [12, 34],
-          popupAnchor: [0, -34]
-        });
-
-        const marker = L.marker([pin.coordinates.lat, pin.coordinates.lng], { icon })
+        const marker = L.marker([pin.coordinates.lat, pin.coordinates.lng])
           .bindPopup(`
             <div class="p-4 min-w-[220px] bg-brand-cream rounded-lg border border-brand-orange/20">
               <div class="flex items-center space-x-3 mb-3">
@@ -140,15 +103,6 @@ export default function InteractiveMap({ height = "500px", showPins = true }: In
       }
     };
   }, [showPins, travelPins]);
-
-  const getPinIcon = (pinType: string) => {
-    switch (pinType) {
-      case 'current': return '📍';
-      case 'planned': return '📌';
-      case 'favorite': return '❤️';
-      default: return '🌍';
-    }
-  };
 
   const getPinTypeLabel = (pinType: string) => {
     switch (pinType) {
