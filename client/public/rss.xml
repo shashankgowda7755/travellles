@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Miles Alone Blog</title>
+    <link>https://www.milesalone.com/blog</link>
+    <description>Latest travel stories and guides from Miles Alone</description>
+    <language>en</language>
+    <item>
+      <title>Munroe Island: Kerala's Hidden Water Heritage</title>
+      <link>https://www.milesalone.com/blog/munroe-island-water-heritage-guide</link>
+      <guid isPermaLink="true">https://www.milesalone.com/blog/munroe-island-water-heritage-guide</guid>
+      <pubDate>Wed, 01 May 2024 00:00:00 GMT</pubDate>
+      <description>Explore the serene backwaters and cultural heritage of Munroe Island.</description>
+    </item>
+  </channel>
+</rss>

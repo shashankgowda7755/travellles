@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://www.milesalone.com/</loc>
+    <image:image>
+      <image:loc>https://www.milesalone.com/images/homepage-hero.webp</image:loc>
+      <image:title>Miles Alone - Solo Travel Journey Across India</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.milesalone.com/blog/munroe-island-water-heritage-guide</loc>
+    <image:image>
+      <image:loc>https://www.milesalone.com/images/munroe-island-backwater.jpg</image:loc>
+      <image:title>Munroe Island: Kerala's Hidden Water Heritage</image:title>
+    </image:image>
+  </url>
+
+</urlset>
