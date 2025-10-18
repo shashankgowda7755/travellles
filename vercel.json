@@ -24,7 +24,7 @@
       "dest": "/assets/$1"
     },
     {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|webp|mp4|webm|ogg|mp3|wav|flac|aac|map|json|xml|txt|html))",
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|webp|mp4|webm|ogg|mp3|wav|flac|aac|map|json|xml|txt|html|xsl))",
       "dest": "/$1"
     },
     {

@@ -1,9 +1,11 @@
 User-agent: *
 Allow: /
 
-# Sitemap location
-Sitemap: https://milesalone.com/sitemap.xml
-Sitemap: https://milesalone.com/sitemap-index.xml
+# Sitemap locations (canonical www domain)
+Sitemap: https://www.milesalone.com/sitemap.xml
+Sitemap: https://www.milesalone.com/sitemap-index.xml
+Sitemap: https://www.milesalone.com/sitemap-images.xml
+Sitemap: https://www.milesalone.com/sitemap-news.xml
 
 # Allow all search engines to crawl the entire site
 # This ensures Google can index all pages
@@ -24,3 +26,6 @@ Allow: /blog
 
 # Crawl delay (optional - helps with server load)
 Crawl-delay: 1
+
+# Host directive for canonicalization
+Host: https://www.milesalone.com
